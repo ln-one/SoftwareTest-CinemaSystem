@@ -1021,11 +1021,11 @@ if (!originUser.getPassword().equals(sysUser.getPassword())) {
 
 | 成员 | 负责模块 | 工作内容 |
 |------|----------|----------|
-| 成员A | 用户模块 | SysUserServiceTest (21个用例) + 报告第5.1节 |
+| **张春冉** | **安全测试 + 用户模块 + 项目统筹** | SecurityTest (16个用例) + SysUserServiceTest (21个用例) + 测试框架搭建(JaCoCo配置) + 报告第5.1节 + 报告第6章(安全测试) + 缺陷分析 + 报告整合 |
 | 成员B | 订单/场次模块 | SysBillServiceTest + SysSessionServiceTest (26个用例) + 报告第5.2节 |
 | 成员C | 电影模块 | SysMovieServiceTest + SysMovieCategoryServiceTest (20个用例) + 报告第5.3节 |
 | 成员D | 影院/影厅模块 | SysCinemaServiceTest + SysHallServiceTest (18个用例) + 报告第5.4节 |
-| 成员E | 角色权限模块 | SysRoleServiceTest + SysResourceServiceTest (30个用例) + 报告第5.5节 + 缺陷分析 |
+| 成员E | 角色权限模块 | SysRoleServiceTest + SysResourceServiceTest (30个用例) + 报告第5.5节 |
 
 ### B. 项目结构
 
