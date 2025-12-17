@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FileUploadUtils.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">CinemaManagerApi</a> &gt; <a href="index.source.html" class="el_package">com.rabbiter.cm.common.file</a> &gt; <span class="el_source">FileUploadUtils.java</span></div><h1>FileUploadUtils.java</h1><pre class="source lang-java linenums">package com.rabbiter.cm.common.file;
+
+import com.rabbiter.cm.common.exception.FileNameLengthLimitExceededException;
+import com.rabbiter.cm.common.exception.FileSizeLimitExceededException;
+import com.rabbiter.cm.common.exception.InvalidExtensionException;
+import com.rabbiter.cm.common.utils.PathUtils;
+import com.rabbiter.cm.common.utils.StringUtil;
+import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.DateFormatUtils;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Date;
+import java.util.UUID;
+
+/**
+ * 文件上传工具类
+ */
+<span class="nc" id="L21">public class FileUploadUtils {</span>
+    /**
+     * 默认大小 50M
+     */
+    public static final long DEFAULT_MAX_SIZE = 50 * 1024 * 1024;
+
+    /**
+     * 默认的文件名最大长度 100
+     */
+    public static final int DEFAULT_FILE_NAME_LENGTH = 100;
+
+    /**
+     * 默认存储图片目录
+     */
+<span class="nc" id="L35">    private static final String parentPath = PathUtils.getClassLoadRootPath() + &quot;/images&quot;;</span>
+
+    public static final String actorPath = &quot;/actor&quot;;
+    public static final String cinemaPath = &quot;/cinema&quot;;
+    public static final String moviePath = &quot;/movie&quot;;
+    public static final String userPath = &quot;/user&quot;;
+
+
+    /**
+     * 默认上传的地址
+     */
+<span class="nc" id="L46">    private static String defaultBaseDir = userPath;</span>
+
+    public static void setDefaultBaseDir(String defaultBaseDir) {
+<span class="nc" id="L49">        FileUploadUtils.defaultBaseDir = defaultBaseDir;</span>
+<span class="nc" id="L50">    }</span>
+
+    public static String getDefaultBaseDir() {
+<span class="nc" id="L53">        return defaultBaseDir;</span>
+    }
+
+    public static String getParentPath() {
+<span class="nc" id="L57">        return parentPath;</span>
+    }
+
+    /**
+     * 以默认配置进行文件上传
+     *
+     * @param file 上传的文件
+     * @return 文件名称
+     * @throws Exception
+     */
+    public static final String upload(MultipartFile file) throws IOException {
+        try {
+<span class="nc" id="L69">            return upload(getParentPath() + getDefaultBaseDir(), file, MimeTypeUtils.DEFAULT_ALLOWED_EXTENSION);</span>
+<span class="nc" id="L70">        } catch (Exception e) {</span>
+<span class="nc" id="L71">            throw new IOException(e.getMessage(), e);</span>
+        }
+    }
+
+    /**
+     * 文件上传
+     *
+     * @param baseDir          相对应用的基目录
+     * @param file             上传的文件
+     * @param allowedExtension 上传文件类型
+     * @return 返回上传成功的文件名
+     * @throws FileSizeLimitExceededException       如果超出最大大小
+     * @throws FileNameLengthLimitExceededException 文件名太长
+     * @throws IOException                          比如读写文件出错时
+     * @throws InvalidExtensionException            文件校验异常
+     */
+    public static final String upload(String baseDir, MultipartFile file, String[] allowedExtension)
+            throws FileSizeLimitExceededException, IOException, FileNameLengthLimitExceededException,
+            InvalidExtensionException {
+<span class="nc" id="L90">        int fileNamelength = file.getOriginalFilename().length();</span>
+<span class="nc bnc" id="L91" title="All 2 branches missed.">        if (fileNamelength &gt; FileUploadUtils.DEFAULT_FILE_NAME_LENGTH) {</span>
+<span class="nc" id="L92">            throw new FileNameLengthLimitExceededException(&quot;文件名称长度不能超过&quot; + FileUploadUtils.DEFAULT_FILE_NAME_LENGTH);</span>
+        }
+
+<span class="nc" id="L95">        assertAllowed(file, allowedExtension);</span>
+
+<span class="nc" id="L97">        String fileName = extractFilename(file);</span>
+
+<span class="nc" id="L99">        File desc = getAbsoluteFile(baseDir, fileName);</span>
+<span class="nc" id="L100">        file.transferTo(desc);</span>
+<span class="nc" id="L101">        String pathFileName = getPathFileName(baseDir, fileName);</span>
+<span class="nc" id="L102">        return pathFileName;</span>
+    }
+
+    /**
+     * 编码文件名 如 : images/user/2021/3/4/***.png
+     */
+    public static final String extractFilename(MultipartFile file) {
+<span class="nc" id="L109">        String fileName = file.getOriginalFilename();</span>
+<span class="nc" id="L110">        String extension = getExtension(file);</span>
+<span class="nc" id="L111">        fileName = DateFormatUtils.format(new Date(), &quot;yyyy/MM/dd&quot;) + &quot;/&quot; + UUID.randomUUID().toString().replaceAll(&quot;-&quot;, &quot;&quot;) + &quot;.&quot; + extension;</span>
+<span class="nc" id="L112">        return fileName;</span>
+    }
+
+    private static final File getAbsoluteFile(String uploadDir, String fileName) throws IOException {
+<span class="nc" id="L116">        File desc = new File(uploadDir + File.separator + fileName);</span>
+
+<span class="nc bnc" id="L118" title="All 2 branches missed.">        if (!desc.getParentFile().exists()) {</span>
+<span class="nc" id="L119">            desc.getParentFile().mkdirs();</span>
+        }
+<span class="nc bnc" id="L121" title="All 2 branches missed.">        if (!desc.exists()) {</span>
+<span class="nc" id="L122">            desc.createNewFile();</span>
+        }
+<span class="nc" id="L124">        return desc;</span>
+    }
+
+    private static final String getPathFileName(String uploadDir, String fileName) throws IOException {
+<span class="nc" id="L128">        int dirLastIndex = parentPath.length() + 1;</span>
+<span class="nc" id="L129">        String currentDir = StringUtils.substring(uploadDir, dirLastIndex);</span>
+<span class="nc" id="L130">        String pathFileName = &quot;/images/&quot; + currentDir + &quot;/&quot; + fileName;</span>
+<span class="nc" id="L131">        return pathFileName;</span>
+    }
+
+    /**
+     * 文件大小校验
+     *
+     * @param file 上传的文件
+     * @return
+     * @throws FileSizeLimitExceededException 如果超出最大大小
+     * @throws InvalidExtensionException
+     */
+    public static final void assertAllowed(MultipartFile file, String[] allowedExtension)
+            throws FileSizeLimitExceededException, InvalidExtensionException {
+<span class="nc" id="L144">        long size = file.getSize();</span>
+<span class="nc bnc" id="L145" title="All 2 branches missed.">        if (DEFAULT_MAX_SIZE != -1 &amp;&amp; size &gt; DEFAULT_MAX_SIZE) {</span>
+<span class="nc" id="L146">            throw new FileSizeLimitExceededException(&quot;文件大小不能超过&quot; + DEFAULT_MAX_SIZE / 1024 / 1024 + &quot;MB&quot;);</span>
+        }
+
+<span class="nc" id="L149">        String fileName = file.getOriginalFilename();</span>
+<span class="nc" id="L150">        String extension = getExtension(file);</span>
+<span class="nc bnc" id="L151" title="All 4 branches missed.">        if (allowedExtension != null &amp;&amp; !isAllowedExtension(extension, allowedExtension)) {</span>
+<span class="nc bnc" id="L152" title="All 2 branches missed.">            if (allowedExtension == MimeTypeUtils.IMAGE_EXTENSION) {</span>
+<span class="nc" id="L153">                throw new InvalidExtensionException(&quot;图片格式不支持&quot; + extension + &quot;格式&quot;);</span>
+            }
+        }
+
+<span class="nc" id="L157">    }</span>
+
+    /**
+     * 判断MIME类型是否是允许的MIME类型
+     *
+     * @param extension
+     * @param allowedExtension
+     * @return
+     */
+    public static final boolean isAllowedExtension(String extension, String[] allowedExtension) {
+<span class="nc bnc" id="L167" title="All 2 branches missed.">        for (String str : allowedExtension) {</span>
+<span class="nc bnc" id="L168" title="All 2 branches missed.">            if (str.equalsIgnoreCase(extension)) {</span>
+<span class="nc" id="L169">                return true;</span>
+            }
+        }
+<span class="nc" id="L172">        return false;</span>
+    }
+
+    /**
+     * 获取文件名的后缀
+     *
+     * @param file 表单文件
+     * @return 后缀名
+     */
+    public static final String getExtension(MultipartFile file) {
+<span class="nc" id="L182">        String extension = FilenameUtils.getExtension(file.getOriginalFilename());</span>
+<span class="nc bnc" id="L183" title="All 2 branches missed.">        if (!StringUtil.isNotEmpty(extension)) {</span>
+<span class="nc" id="L184">            extension = MimeTypeUtils.getExtension(file.getContentType());</span>
+        }
+<span class="nc" id="L186">        return extension;</span>
+    }
+
+    /**
+     * 删除文件
+     *
+     * @param filePath 文件
+     * @return
+     */
+    public static boolean deleteFile(String filePath) {
+<span class="nc" id="L196">        boolean flag = false;</span>
+<span class="nc" id="L197">        File file = new File(filePath);</span>
+        // 路径为文件且不为空则进行删除
+<span class="nc bnc" id="L199" title="All 4 branches missed.">        if (file.isFile() &amp;&amp; file.exists()) {</span>
+<span class="nc" id="L200">            file.delete();</span>
+<span class="nc" id="L201">            flag = true;</span>
+        }
+<span class="nc" id="L203">        return flag;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

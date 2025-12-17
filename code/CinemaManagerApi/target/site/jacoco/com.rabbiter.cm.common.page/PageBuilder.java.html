@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PageBuilder.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">CinemaManagerApi</a> &gt; <a href="index.source.html" class="el_package">com.rabbiter.cm.common.page</a> &gt; <span class="el_source">PageBuilder.java</span></div><h1>PageBuilder.java</h1><pre class="source lang-java linenums">package com.rabbiter.cm.common.page;
+
+import com.rabbiter.cm.common.utils.ServletUtil;
+import com.rabbiter.cm.common.utils.StringUtil;
+
+import javax.servlet.http.HttpServletRequest;
+
+/**
+ * 构建页对象，通过ServletUtil减少Controller方法上的请求参数
+ */
+<span class="nc" id="L11">public class PageBuilder {</span>
+
+    //当前页码
+    public static final String PAGE_NUM = &quot;pageNum&quot;;
+
+    //页大小
+    public static final String PAGE_SIZE = &quot;pageSize&quot;;
+
+    //总记录数
+    public static final String TOTAL = &quot;total&quot;;
+
+    //按列排序
+    public static final String ORDER_BY_COLUMN = &quot;orderByColumn&quot;;
+
+    //升序还是降序
+    public static final String IS_ASC = &quot;isAsc&quot;;
+
+    public static Page buildPage() {
+<span class="nc" id="L29">        Page page = new Page();</span>
+<span class="nc" id="L30">        HttpServletRequest request = ServletUtil.getRequest();</span>
+
+<span class="nc" id="L32">        String pageNum = request.getParameter(PAGE_NUM);</span>
+<span class="nc bnc" id="L33" title="All 2 branches missed.">        if (StringUtil.isNotEmpty(pageNum)) {</span>
+<span class="nc" id="L34">            page.setPageNum(Integer.parseInt(pageNum));</span>
+        }
+
+<span class="nc" id="L37">        String pageSize = request.getParameter(PAGE_SIZE);</span>
+<span class="nc bnc" id="L38" title="All 2 branches missed.">        if (StringUtil.isNotEmpty(pageSize)) {</span>
+<span class="nc" id="L39">            page.setPageSize(Integer.parseInt(pageSize));</span>
+        }
+
+<span class="nc" id="L42">        page.setIsAsc(request.getParameter(IS_ASC));</span>
+<span class="nc" id="L43">        page.setOrderByColumn(StringUtil.toUnderScoreCase(request.getParameter(ORDER_BY_COLUMN)));</span>
+<span class="nc" id="L44">        return page;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

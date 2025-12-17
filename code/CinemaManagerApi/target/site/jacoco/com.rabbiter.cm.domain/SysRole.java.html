@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SysRole.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">CinemaManagerApi</a> &gt; <a href="index.source.html" class="el_package">com.rabbiter.cm.domain</a> &gt; <span class="el_source">SysRole.java</span></div><h1>SysRole.java</h1><pre class="source lang-java linenums">package com.rabbiter.cm.domain;
+
+import javax.validation.constraints.NotBlank;
+import java.io.Serializable;
+import java.util.List;
+import java.util.Objects;
+
+public class SysRole implements Serializable {
+
+<span class="fc" id="L10">    private static final Long serialVersionUID = 1L;</span>
+
+    private Long roleId;
+
+    //角色名称
+    @NotBlank(message = &quot;角色名称不能为空&quot;)
+    private String roleName;
+
+    //角色描述
+    @NotBlank(message = &quot;角色描述不能为空&quot;)
+    private String roleDesc;
+
+
+    //角色拥有的权限，分多级权限存储，取名为children方便读取所有权限
+    private List&lt;SysResource&gt; children;
+
+<span class="fc" id="L26">    public SysRole() {</span>
+<span class="fc" id="L27">    }</span>
+
+<span class="nc" id="L29">    public SysRole(Long roleId, String roleName, String roleDesc, List&lt;SysResource&gt; children) {</span>
+<span class="nc" id="L30">        this.roleId = roleId;</span>
+<span class="nc" id="L31">        this.roleName = roleName;</span>
+<span class="nc" id="L32">        this.roleDesc = roleDesc;</span>
+<span class="nc" id="L33">        this.children = children;</span>
+<span class="nc" id="L34">    }</span>
+
+    public Long getRoleId() {
+<span class="nc" id="L37">        return roleId;</span>
+    }
+
+    public void setRoleId(Long roleId) {
+<span class="fc" id="L41">        this.roleId = roleId;</span>
+<span class="fc" id="L42">    }</span>
+
+    public String getRoleName() {
+<span class="fc" id="L45">        return roleName;</span>
+    }
+
+    public void setRoleName(String roleName) {
+<span class="fc" id="L49">        this.roleName = roleName;</span>
+<span class="fc" id="L50">    }</span>
+
+    public String getRoleDesc() {
+<span class="nc" id="L53">        return roleDesc;</span>
+    }
+
+    public void setRoleDesc(String roleDesc) {
+<span class="fc" id="L57">        this.roleDesc = roleDesc;</span>
+<span class="fc" id="L58">    }</span>
+
+    public List&lt;SysResource&gt; getChildren() {
+<span class="nc" id="L61">        return children;</span>
+    }
+
+    public void setChildren(List&lt;SysResource&gt; children) {
+<span class="nc" id="L65">        this.children = children;</span>
+<span class="nc" id="L66">    }</span>
+
+    @Override
+    public boolean equals(Object o) {
+<span class="nc bnc" id="L70" title="All 2 branches missed.">        if (this == o) return true;</span>
+<span class="nc bnc" id="L71" title="All 4 branches missed.">        if (o == null || getClass() != o.getClass()) return false;</span>
+<span class="nc" id="L72">        SysRole sysRole = (SysRole) o;</span>
+<span class="nc bnc" id="L73" title="All 8 branches missed.">        return Objects.equals(roleId, sysRole.roleId) &amp;&amp; Objects.equals(roleName, sysRole.roleName) &amp;&amp; Objects.equals(roleDesc, sysRole.roleDesc) &amp;&amp; Objects.equals(children, sysRole.children);</span>
+    }
+
+    @Override
+    public int hashCode() {
+<span class="nc" id="L78">        return Objects.hash(roleId, roleName, roleDesc, children);</span>
+    }
+
+    @Override
+    public String toString() {
+<span class="nc" id="L83">        return &quot;SysRole{&quot; +</span>
+                &quot;roleId=&quot; + roleId +
+                &quot;, roleName='&quot; + roleName + '\'' +
+                &quot;, roleDesc='&quot; + roleDesc + '\'' +
+                &quot;, children=&quot; + children +
+                '}';
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

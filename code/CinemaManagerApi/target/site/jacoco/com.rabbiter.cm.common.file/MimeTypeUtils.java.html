@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MimeTypeUtils.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">CinemaManagerApi</a> &gt; <a href="index.source.html" class="el_package">com.rabbiter.cm.common.file</a> &gt; <span class="el_source">MimeTypeUtils.java</span></div><h1>MimeTypeUtils.java</h1><pre class="source lang-java linenums">package com.rabbiter.cm.common.file;
+
+/**
+ * 媒体类型工具类
+ */
+<span class="nc" id="L6">public class MimeTypeUtils {</span>
+
+    public static final String IMAGE_PNG = &quot;image/png&quot;;
+
+    public static final String IMAGE_JPG = &quot;image/jpg&quot;;
+
+    public static final String IMAGE_JPEG = &quot;image/jpeg&quot;;
+
+    public static final String IMAGE_BMP = &quot;image/bmp&quot;;
+
+    public static final String IMAGE_GIF = &quot;image/gif&quot;;
+
+<span class="nc" id="L18">    public static final String[] IMAGE_EXTENSION = {&quot;bmp&quot;, &quot;gif&quot;, &quot;jpg&quot;, &quot;jpeg&quot;, &quot;png&quot;};</span>
+
+<span class="nc" id="L20">    public static final String[] DEFAULT_ALLOWED_EXTENSION = {&quot;bmp&quot;, &quot;gif&quot;, &quot;jpg&quot;, &quot;jpeg&quot;, &quot;png&quot;};</span>
+
+    public static String getExtension(String prefix) {
+<span class="nc bnc" id="L23" title="All 6 branches missed.">        switch (prefix) {</span>
+            case IMAGE_PNG:
+<span class="nc" id="L25">                return &quot;png&quot;;</span>
+            case IMAGE_JPG:
+<span class="nc" id="L27">                return &quot;jpg&quot;;</span>
+            case IMAGE_JPEG:
+<span class="nc" id="L29">                return &quot;jpeg&quot;;</span>
+            case IMAGE_BMP:
+<span class="nc" id="L31">                return &quot;bmp&quot;;</span>
+            case IMAGE_GIF:
+<span class="nc" id="L33">                return &quot;gif&quot;;</span>
+            default:
+<span class="nc" id="L35">                return &quot;&quot;;</span>
+        }
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

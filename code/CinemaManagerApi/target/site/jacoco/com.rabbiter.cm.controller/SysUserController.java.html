@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SysUserController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">CinemaManagerApi</a> &gt; <a href="index.source.html" class="el_package">com.rabbiter.cm.controller</a> &gt; <span class="el_source">SysUserController.java</span></div><h1>SysUserController.java</h1><pre class="source lang-java linenums">package com.rabbiter.cm.controller;
+
+import com.rabbiter.cm.common.response.ResponseResult;
+import com.rabbiter.cm.domain.SysUser;
+import com.rabbiter.cm.domain.vo.SysUserVo;
+import com.rabbiter.cm.service.impl.SysUserServiceImpl;
+import com.rabbiter.cm.controller.BaseController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+<span class="fc" id="L15">public class SysUserController extends BaseController {</span>
+    @Autowired
+    private SysUserServiceImpl sysUserService;
+
+    @GetMapping(&quot;/sysUser&quot;)
+    public ResponseResult findAllUsers(SysUser sysUser) {
+<span class="nc" id="L21">        startPage();</span>
+<span class="nc" id="L22">        List&lt;SysUser&gt; data = sysUserService.findAllUsers(sysUser);</span>
+<span class="nc" id="L23">        return getResult(data);</span>
+    }
+
+    @GetMapping(&quot;/sysUser/{id}&quot;)
+    public ResponseResult findUserById(@PathVariable Long id) {
+<span class="nc" id="L28">        return getResult(sysUserService.findUserById(id));</span>
+    }
+
+    /**
+     * 添加用户请求，注册也在这里
+     * @param sysUser
+     * @return
+     */
+    @PostMapping(&quot;/sysUser&quot;)
+    public ResponseResult addUser(@Validated @RequestBody SysUser sysUser) {
+<span class="nc" id="L38">        return getResult(sysUserService.addUser(sysUser));</span>
+    }
+
+    @PutMapping(&quot;/sysUser&quot;)
+    public ResponseResult updateUser(@Validated @RequestBody SysUser sysUser) {
+<span class="nc" id="L43">        return getResult(sysUserService.updateUser(sysUser));</span>
+    }
+
+    @DeleteMapping(&quot;/sysUser/{ids}&quot;)
+    public ResponseResult deleteUser(@PathVariable Long[] ids) {
+<span class="nc" id="L48">        return getResult(sysUserService.deleteUser(ids));</span>
+    }
+
+    /**
+     * 用户登录请求
+     *
+     * @param sysUserVo
+     * @return
+     */
+    @RequestMapping(&quot;/sysUser/login&quot;)
+    public ResponseResult login(@RequestBody SysUserVo sysUserVo) {
+<span class="nc" id="L59">        return getResult(sysUserService.login(sysUserVo));</span>
+    }
+
+    /**
+     * 用户注册请求
+     *
+     * @param sysUser
+     * @return
+     */
+    @PostMapping(&quot;/sysUser/register&quot;)
+    public ResponseResult register(@Validated @RequestBody SysUser sysUser) {
+        // 注册只接收部分参数值，重新建立一个实例对象只接受注册接受的参数
+<span class="nc" id="L71">        SysUser registerUserInfo = new SysUser();</span>
+<span class="nc" id="L72">        registerUserInfo.setUserName(sysUser.getUserName());</span>
+<span class="nc" id="L73">        registerUserInfo.setPassword(sysUser.getPassword());</span>
+<span class="nc" id="L74">        registerUserInfo.setSex(sysUser.getSex());</span>
+<span class="nc" id="L75">        registerUserInfo.setPhoneNumber(sysUser.getPhoneNumber());</span>
+<span class="nc" id="L76">        return getResult(sysUserService.addUser(registerUserInfo));</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

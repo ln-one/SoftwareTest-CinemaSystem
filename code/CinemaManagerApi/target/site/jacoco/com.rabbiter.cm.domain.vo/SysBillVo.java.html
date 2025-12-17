@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SysBillVo.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">CinemaManagerApi</a> &gt; <a href="index.source.html" class="el_package">com.rabbiter.cm.domain.vo</a> &gt; <span class="el_source">SysBillVo.java</span></div><h1>SysBillVo.java</h1><pre class="source lang-java linenums">package com.rabbiter.cm.domain.vo;
+
+import com.rabbiter.cm.domain.SysBill;
+
+import java.io.Serializable;
+
+/**
+ * 接收前端增加订单的数据
+ */
+public class SysBillVo implements Serializable {
+
+    //订单信息
+    private SysBill sysBill;
+
+    //若成功更新后场次的座位信息
+    private String sessionSeats;
+
+<span class="nc" id="L18">    public SysBillVo() {</span>
+<span class="nc" id="L19">    }</span>
+
+<span class="nc" id="L21">    public SysBillVo(SysBill sysBill, String sessionSeats) {</span>
+<span class="nc" id="L22">        this.sysBill = sysBill;</span>
+<span class="nc" id="L23">        this.sessionSeats = sessionSeats;</span>
+<span class="nc" id="L24">    }</span>
+
+    public SysBill getSysBill() {
+<span class="nc" id="L27">        return sysBill;</span>
+    }
+
+    public void setSysBill(SysBill sysBill) {
+<span class="nc" id="L31">        this.sysBill = sysBill;</span>
+<span class="nc" id="L32">    }</span>
+
+    public String getSessionSeats() {
+<span class="nc" id="L35">        return sessionSeats;</span>
+    }
+
+    public void setSessionSeats(String sessionSeats) {
+<span class="nc" id="L39">        this.sessionSeats = sessionSeats;</span>
+<span class="nc" id="L40">    }</span>
+
+    @Override
+    public String toString() {
+<span class="nc" id="L44">        return &quot;SysBillVo{&quot; +</span>
+                &quot;sysBill=&quot; + sysBill +
+                &quot;, sessionSeats='&quot; + sessionSeats + '\'' +
+                '}';
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

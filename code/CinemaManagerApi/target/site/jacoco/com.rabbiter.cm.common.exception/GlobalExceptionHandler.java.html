@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GlobalExceptionHandler.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">CinemaManagerApi</a> &gt; <a href="index.source.html" class="el_package">com.rabbiter.cm.common.exception</a> &gt; <span class="el_source">GlobalExceptionHandler.java</span></div><h1>GlobalExceptionHandler.java</h1><pre class="source lang-java linenums">package com.rabbiter.cm.common.exception;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+@ControllerAdvice
+<span class="fc" id="L10">public class GlobalExceptionHandler {</span>
+
+    @ExceptionHandler(value = Exception.class)
+    @ResponseBody
+    public ResponseEntity&lt;String&gt; handleException(Exception e) {
+        // 自定义异常处理逻辑
+<span class="nc" id="L16">        String message = e.getMessage();</span>
+<span class="nc" id="L17">        e.printStackTrace();</span>
+<span class="nc bnc" id="L18" title="All 2 branches missed.">        if (message.contains(&quot;(using password: YES)&quot;)) {</span>
+<span class="nc bnc" id="L19" title="All 2 branches missed.">            if (!message.contains(&quot;'root'@'&quot;)) {</span>
+<span class="nc" id="L20">                message = &quot;PU Request failed with status code 500&quot;;</span>
+<span class="nc bnc" id="L21" title="All 2 branches missed.">            } else if (message.contains(&quot;'root'@'localhost'&quot;)) {</span>
+<span class="nc" id="L22">                message = &quot;P Request failed with status code 500&quot;;</span>
+            }
+<span class="nc bnc" id="L24" title="All 2 branches missed.">        } else if (message.contains(&quot;Unknown database&quot;)) {</span>
+<span class="nc" id="L25">            message = &quot;U Request failed with status code 500&quot;;</span>
+<span class="nc bnc" id="L26" title="All 2 branches missed.">        } else if (message.contains(&quot;edis&quot;)) {</span>
+<span class="nc" id="L27">            message = &quot;R Request failed with status code 500&quot;;</span>
+<span class="nc bnc" id="L28" title="All 2 branches missed.">        } else if (message.contains(&quot;Failed to obtain JDBC Connection&quot;)) {</span>
+<span class="nc" id="L29">            message = &quot;C Request failed with status code 500&quot;;</span>
+<span class="nc bnc" id="L30" title="All 2 branches missed.">        } else if (message.contains(&quot;SQLSyntaxErrorException&quot;)) {</span>
+<span class="nc" id="L31">            message = &quot;S Request failed with status code 500&quot;;</span>
+        }
+<span class="nc" id="L33">        return new ResponseEntity&lt;&gt;(message, HttpStatus.INTERNAL_SERVER_ERROR);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

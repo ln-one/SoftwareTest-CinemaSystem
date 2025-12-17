@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SysResourceController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">CinemaManagerApi</a> &gt; <a href="index.source.html" class="el_package">com.rabbiter.cm.controller</a> &gt; <span class="el_source">SysResourceController.java</span></div><h1>SysResourceController.java</h1><pre class="source lang-java linenums">package com.rabbiter.cm.controller;
+
+import com.rabbiter.cm.common.response.ResponseResult;
+import com.rabbiter.cm.domain.SysResource;
+import com.rabbiter.cm.service.impl.SysResourceServiceImpl;
+import com.rabbiter.cm.controller.BaseController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+<span class="fc" id="L14">public class SysResourceController extends BaseController {</span>
+
+    @Autowired
+    SysResourceServiceImpl sysResourceService;
+
+    @GetMapping(&quot;/sysResource&quot;)
+    public ResponseResult findAllResources() {
+<span class="nc" id="L21">        startPage();</span>
+<span class="nc" id="L22">        List&lt;SysResource&gt; data = sysResourceService.findAllResources();</span>
+<span class="nc" id="L23">        return getResult(data);</span>
+    }
+
+    @GetMapping(&quot;/sysResource/children&quot;)
+    public ResponseResult findWithChildren() {
+<span class="nc" id="L28">        return getResult((Object) sysResourceService.findWithChildren());</span>
+    }
+
+    @GetMapping(&quot;/sysResource/{id}&quot;)
+    public ResponseResult findResourceById(@PathVariable Long id) {
+<span class="nc" id="L33">        return getResult(sysResourceService.findResourceById(id));</span>
+    }
+
+    @GetMapping(&quot;/sysResource/tree&quot;)
+    public ResponseResult findAllWithAllChildren() {
+<span class="nc" id="L38">        return getResult(sysResourceService.findAllWithAllChildren());</span>
+    }
+
+    @PostMapping(&quot;/sysResource&quot;)
+    public ResponseResult addResource(@Validated @RequestBody SysResource sysResource) {
+<span class="nc" id="L43">        return getResult(sysResourceService.addResource(sysResource));</span>
+    }
+
+    @PutMapping(&quot;/sysResource&quot;)
+    public ResponseResult updateResource(@Validated @RequestBody SysResource sysResource) {
+<span class="nc" id="L48">        return getResult(sysResourceService.updateResource(sysResource));</span>
+    }
+
+    @DeleteMapping(&quot;/sysResource/{ids}&quot;)
+    public ResponseResult deleteResource(@PathVariable Long[] ids) {
+<span class="nc" id="L53">        return getResult(sysResourceService.deleteResource(ids));</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

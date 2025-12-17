@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SysSessionVo.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">CinemaManagerApi</a> &gt; <a href="index.source.html" class="el_package">com.rabbiter.cm.domain.vo</a> &gt; <span class="el_source">SysSessionVo.java</span></div><h1>SysSessionVo.java</h1><pre class="source lang-java linenums">package com.rabbiter.cm.domain.vo;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import java.io.Serializable;
+import java.time.LocalDate;
+
+public class SysSessionVo implements Serializable {
+
+    private Long hallId;
+
+    private Long movieId;
+
+    @JsonFormat(locale = &quot;zh&quot;, timezone = &quot;GMT+8&quot;, pattern = &quot;yyyy-MM-dd&quot;)
+    private LocalDate sessionDate;
+
+<span class="fc" id="L17">    public SysSessionVo() {</span>
+<span class="fc" id="L18">    }</span>
+
+<span class="nc" id="L20">    public SysSessionVo(Long hallId, Long movieId, LocalDate sessionDate) {</span>
+<span class="nc" id="L21">        this.hallId = hallId;</span>
+<span class="nc" id="L22">        this.movieId = movieId;</span>
+<span class="nc" id="L23">        this.sessionDate = sessionDate;</span>
+<span class="nc" id="L24">    }</span>
+
+    public Long getHallId() {
+<span class="nc" id="L27">        return hallId;</span>
+    }
+
+    public void setHallId(Long hallId) {
+<span class="nc" id="L31">        this.hallId = hallId;</span>
+<span class="nc" id="L32">    }</span>
+
+    public Long getMovieId() {
+<span class="nc" id="L35">        return movieId;</span>
+    }
+
+    public void setMovieId(Long movieId) {
+<span class="nc" id="L39">        this.movieId = movieId;</span>
+<span class="nc" id="L40">    }</span>
+
+    public LocalDate getSessionDate() {
+<span class="nc" id="L43">        return sessionDate;</span>
+    }
+
+    public void setSessionDate(LocalDate sessionDate) {
+<span class="nc" id="L47">        this.sessionDate = sessionDate;</span>
+<span class="nc" id="L48">    }</span>
+
+    @Override
+    public String toString() {
+<span class="nc" id="L52">        return &quot;SysSessionVo{&quot; +</span>
+                &quot;hallId=&quot; + hallId +
+                &quot;, movieId=&quot; + movieId +
+                &quot;, sessionDate=&quot; + sessionDate +
+                '}';
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

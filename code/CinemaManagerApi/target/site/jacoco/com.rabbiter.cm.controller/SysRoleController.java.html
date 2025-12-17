@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SysRoleController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">CinemaManagerApi</a> &gt; <a href="index.source.html" class="el_package">com.rabbiter.cm.controller</a> &gt; <span class="el_source">SysRoleController.java</span></div><h1>SysRoleController.java</h1><pre class="source lang-java linenums">package com.rabbiter.cm.controller;
+
+import com.rabbiter.cm.common.response.ResponseResult;
+import com.rabbiter.cm.domain.SysRole;
+import com.rabbiter.cm.service.impl.SysRoleServiceImpl;
+import com.rabbiter.cm.controller.BaseController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+<span class="fc" id="L14">public class SysRoleController extends BaseController {</span>
+
+    @Autowired
+    SysRoleServiceImpl sysRoleService;
+
+    @GetMapping(&quot;/sysRole&quot;)
+    public ResponseResult findAllRoles() {
+<span class="nc" id="L21">        startPage();</span>
+<span class="nc" id="L22">        List&lt;SysRole&gt; data = sysRoleService.findAllRoles();</span>
+<span class="nc" id="L23">        return getResult(data);</span>
+    }
+
+    @GetMapping(&quot;/sysRole/{id}&quot;)
+    public ResponseResult findRoleById(@PathVariable Long id) {
+<span class="nc" id="L28">        return getResult(sysRoleService.findRoleById(id));</span>
+    }
+
+    @PostMapping(&quot;/sysRole&quot;)
+    public ResponseResult addRole(@Validated @RequestBody SysRole sysRole) {
+<span class="nc" id="L33">        return getResult(sysRoleService.addRole(sysRole));</span>
+    }
+
+    @PutMapping(&quot;/sysRole&quot;)
+    public ResponseResult updateRole(@Validated @RequestBody SysRole sysRole) {
+<span class="nc" id="L38">        return getResult(sysRoleService.updateRole(sysRole));</span>
+    }
+
+    @DeleteMapping(&quot;/sysRole/{ids}&quot;)
+    public ResponseResult deleteRole(@PathVariable Long[] ids) {
+<span class="nc" id="L43">        return getResult(sysRoleService.deleteRole(ids));</span>
+    }
+
+    /**
+     * 给指定 id 的角色分配权限，包括增加或者删除权限
+     * @param roleId
+     * @param keys
+     * @return
+     */
+    @PostMapping(&quot;/sysRole/{roleId}&quot;)
+    public ResponseResult allotRight(@PathVariable Long roleId, @RequestBody Long[] keys) {
+<span class="nc" id="L54">        return getResult(sysRoleService.allotRight(roleId, keys));</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

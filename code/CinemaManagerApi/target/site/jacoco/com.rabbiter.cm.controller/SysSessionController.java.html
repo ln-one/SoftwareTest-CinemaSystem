@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SysSessionController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">CinemaManagerApi</a> &gt; <a href="index.source.html" class="el_package">com.rabbiter.cm.controller</a> &gt; <span class="el_source">SysSessionController.java</span></div><h1>SysSessionController.java</h1><pre class="source lang-java linenums">package com.rabbiter.cm.controller;
+
+import com.rabbiter.cm.common.response.ResponseResult;
+import com.rabbiter.cm.common.utils.ApplicationContextUtils;
+import com.rabbiter.cm.domain.SysSession;
+import com.rabbiter.cm.domain.vo.SysSessionVo;
+import com.rabbiter.cm.service.impl.SysSessionServiceImpl;
+import com.rabbiter.cm.controller.BaseController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+
+@RestController
+<span class="fc" id="L16">public class SysSessionController extends BaseController {</span>
+
+    @Autowired
+    private SysSessionServiceImpl sysSessionService;
+
+    /**
+     * 根据vo中的条件查询所有场次，如果在前台购票部分注意设置pageSize=100或者其他大一些的数
+     *
+     * @param sysSessionVo
+     * @return
+     */
+    @GetMapping(&quot;/sysSession&quot;)
+    public ResponseResult findByVo(SysSessionVo sysSessionVo) {
+<span class="nc" id="L29">        startPage();</span>
+<span class="nc" id="L30">        List&lt;SysSession&gt; list = sysSessionService.findByVo(sysSessionVo);</span>
+<span class="nc" id="L31">        return getResult(list);</span>
+    }
+
+    @GetMapping(&quot;/sysSession/find/{id}&quot;)
+    public ResponseResult findSessionById(@PathVariable Long id) {
+        // 取消所有超时订单并释放占座资源
+<span class="nc" id="L37">        ApplicationContextUtils.getBean(&quot;cancelTimeoutBill&quot;);</span>
+<span class="nc" id="L38">        return getResult(sysSessionService.findSessionById(id));</span>
+    }
+
+
+    @GetMapping(&quot;/sysSession/isAbleEdit&quot;)
+    public ResponseResult findSessionByMovieIdOrHallId(SysSession sysSession) {
+<span class="nc" id="L44">        return getResult(sysSessionService.findSessionByMovieIdOrHallId(sysSession));</span>
+    }
+
+    @PostMapping(&quot;/sysSession&quot;)
+    public ResponseResult addSession(@RequestBody SysSession sysSession) {
+<span class="nc" id="L49">        return getResult(sysSessionService.addSession(sysSession));</span>
+    }
+
+    @PutMapping(&quot;/sysSession&quot;)
+    public ResponseResult updateSession(@RequestBody SysSession sysSession) {
+<span class="nc" id="L54">        return getResult(sysSessionService.updateSession(sysSession));</span>
+    }
+
+    @DeleteMapping(&quot;/sysSession/{ids}&quot;)
+    public ResponseResult deleteSession(@PathVariable Long[] ids) {
+<span class="nc" id="L59">        return getResult(sysSessionService.deleteSession(ids));</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

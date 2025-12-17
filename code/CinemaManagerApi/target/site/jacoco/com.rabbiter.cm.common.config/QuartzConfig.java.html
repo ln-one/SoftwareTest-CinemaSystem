@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>QuartzConfig.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">CinemaManagerApi</a> &gt; <a href="index.source.html" class="el_package">com.rabbiter.cm.common.config</a> &gt; <span class="el_source">QuartzConfig.java</span></div><h1>QuartzConfig.java</h1><pre class="source lang-java linenums">package com.rabbiter.cm.common.config;
+
+
+import com.rabbiter.cm.common.utils.ApplicationContextUtils;
+import com.rabbiter.cm.service.impl.SysBillServiceImpl;
+import com.rabbiter.cm.service.impl.SysSessionServiceImpl;
+import org.quartz.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.quartz.QuartzJobBean;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+@Configuration
+<span class="fc" id="L17">public class QuartzConfig {</span>
+
+    @Autowired
+    private SysBillServiceImpl sysBillService;
+
+    @Autowired
+    private SysSessionServiceImpl sysSessionService;
+
+    @Bean
+    public JobDetail jobDetail() {
+<span class="fc" id="L27">        QuartzJobBean quartzJob = new QuartzJobBean() {</span>
+            @Override
+            protected void executeInternal(JobExecutionContext jobExecutionContext) throws JobExecutionException {
+<span class="nc" id="L30">                SimpleDateFormat sdf = new SimpleDateFormat(&quot;yyyy-MM-dd HH:mm:ss&quot;);</span>
+<span class="nc" id="L31">                System.out.println(&quot;执行取消超时订单处理&quot; + sdf.format(new Date()));</span>
+                // 取消所有超时订单并释放占座资源
+<span class="nc" id="L33">                ApplicationContextUtils.getBean(&quot;cancelTimeoutBill&quot;);</span>
+<span class="nc" id="L34">            }</span>
+        };
+<span class="fc" id="L36">        return JobBuilder.newJob(quartzJob.getClass()).storeDurably().build();</span>
+    }
+
+    @Bean
+    public SimpleTrigger trigger() {
+        //每5分钟执行一次，一直重复执行
+        SimpleScheduleBuilder scheduleBuilder =
+<span class="fc" id="L43">                SimpleScheduleBuilder.simpleSchedule()</span>
+<span class="fc" id="L44">                        .withIntervalInSeconds(5 * 60)</span>
+<span class="fc" id="L45">                        .repeatForever();</span>
+<span class="fc" id="L46">        return TriggerBuilder.newTrigger()</span>
+<span class="fc" id="L47">                .forJob(jobDetail())</span>
+<span class="fc" id="L48">                .withSchedule(scheduleBuilder).build();</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

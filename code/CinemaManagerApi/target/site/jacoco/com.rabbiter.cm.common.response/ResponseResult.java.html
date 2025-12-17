@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ResponseResult.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">CinemaManagerApi</a> &gt; <a href="index.source.html" class="el_package">com.rabbiter.cm.common.response</a> &gt; <span class="el_source">ResponseResult.java</span></div><h1>ResponseResult.java</h1><pre class="source lang-java linenums">package com.rabbiter.cm.common.response;
+
+import com.rabbiter.cm.common.constant.HttpStatus;
+
+import java.util.HashMap;
+
+/**
+ * 响应消息结果，使用Map存储
+ */
+public class ResponseResult extends HashMap&lt;String, Object&gt; {
+
+    private static final long serialVersionUID = 1L;
+
+    //状态码的key
+    private static final String CODE = &quot;code&quot;;
+
+    //操作结果信息key
+    private static final String MESSAGE = &quot;msg&quot;;
+
+    //返回数据的key
+    private static final String DATA = &quot;data&quot;;
+
+    /**
+     * 空的响应消息结果
+     */
+<span class="nc" id="L26">    public ResponseResult() {</span>
+<span class="nc" id="L27">    }</span>
+
+    /**
+     * 不包含数据的响应消息
+     *
+     * @param code
+     * @param msg
+     */
+<span class="nc" id="L35">    public ResponseResult(int code, String msg) {</span>
+<span class="nc" id="L36">        super.put(CODE, code);</span>
+<span class="nc" id="L37">        super.put(MESSAGE, msg);</span>
+<span class="nc" id="L38">    }</span>
+
+    /**
+     * 构造响应消息
+     *
+     * @param code 状态码
+     * @param msg  响应消息
+     * @param data 响应数据
+     */
+<span class="nc" id="L47">    public ResponseResult(int code, String msg, Object data) {</span>
+<span class="nc" id="L48">        super.put(CODE, code);</span>
+<span class="nc" id="L49">        super.put(MESSAGE, msg);</span>
+<span class="nc bnc" id="L50" title="All 2 branches missed.">        if (data != null) {</span>
+<span class="nc" id="L51">            super.put(DATA, data);</span>
+        }
+<span class="nc" id="L53">    }</span>
+
+    /* 返回成功消息 */
+    public static ResponseResult success() {
+<span class="nc" id="L57">        return success(&quot;操作成功&quot;);</span>
+    }
+
+    public static ResponseResult success(String msg) {
+<span class="nc" id="L61">        return success(msg, null);</span>
+    }
+
+    public static ResponseResult success(Object data) {
+<span class="nc" id="L65">        return success(&quot;操作成功&quot;, data);</span>
+    }
+
+    /**
+     * 返回成功消息
+     *
+     * @param msg  响应消息
+     * @param data 响应数据
+     * @return 响应消息对象
+     */
+    public static ResponseResult success(String msg, Object data) {
+<span class="nc" id="L76">        return new ResponseResult(HttpStatus.SUCCESS, msg, data);</span>
+    }
+
+
+    /* 返回错误消息 */
+    public static ResponseResult error() {
+<span class="nc" id="L82">        return error(&quot;操作失败&quot;);</span>
+    }
+
+    public static ResponseResult error(String msg) {
+<span class="nc" id="L86">        return error(msg, null);</span>
+    }
+
+    /**
+     * 指定返回错误状态码的错误消息
+     *
+     * @param code
+     * @param msg
+     * @return
+     */
+    public static ResponseResult error(int code, String msg) {
+<span class="nc" id="L97">        return new ResponseResult(code, msg, null);</span>
+    }
+
+    /**
+     * 默认类型错误消息(500)
+     *
+     * @param msg
+     * @param data
+     * @return
+     */
+    public static ResponseResult error(String msg, Object data) {
+<span class="nc" id="L108">        return new ResponseResult(HttpStatus.ERROR, msg, data);</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

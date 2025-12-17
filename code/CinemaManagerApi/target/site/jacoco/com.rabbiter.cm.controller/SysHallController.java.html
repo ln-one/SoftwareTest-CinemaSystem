@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SysHallController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">CinemaManagerApi</a> &gt; <a href="index.source.html" class="el_package">com.rabbiter.cm.controller</a> &gt; <span class="el_source">SysHallController.java</span></div><h1>SysHallController.java</h1><pre class="source lang-java linenums">package com.rabbiter.cm.controller;
+
+import com.rabbiter.cm.common.response.ResponseResult;
+import com.rabbiter.cm.domain.SysHall;
+import com.rabbiter.cm.service.impl.SysHallServiceImpl;
+import com.rabbiter.cm.controller.BaseController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+<span class="fc" id="L12">public class SysHallController extends BaseController {</span>
+
+    @Autowired
+    private SysHallServiceImpl sysHallService;
+
+    @GetMapping(&quot;/sysHall&quot;)
+    public ResponseResult findAllHalls(SysHall sysHall) {
+<span class="nc" id="L19">        startPage();</span>
+<span class="nc" id="L20">        return getResult(sysHallService.findAllHalls(sysHall));</span>
+    }
+
+    @GetMapping(&quot;/sysHall/{hallId}&quot;)
+    public ResponseResult findHallById(@PathVariable Long hallId) {
+<span class="nc" id="L25">        SysHall sysHall = new SysHall();</span>
+<span class="nc" id="L26">        sysHall.setHallId(hallId);</span>
+<span class="nc" id="L27">        return getResult(sysHallService.findHallById(sysHall));</span>
+    }
+
+    @PostMapping(&quot;/sysHall&quot;)
+    public ResponseResult addHall(@Validated @RequestBody SysHall sysHall) {
+<span class="nc" id="L32">        return getResult(sysHallService.addHall(sysHall));</span>
+    }
+
+    @PutMapping(&quot;/sysHall&quot;)
+    public ResponseResult updateHall(@Validated @RequestBody SysHall sysHall) {
+<span class="nc" id="L37">        int rows = sysHallService.updateHall(sysHall);</span>
+<span class="nc" id="L38">        return getResult(rows);</span>
+    }
+
+    @PostMapping(&quot;/sysHall/delete&quot;)
+    public ResponseResult deleteHall(@RequestBody SysHall[] sysHalls) {
+<span class="nc" id="L43">        return getResult(sysHallService.deleteHall(sysHalls));</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

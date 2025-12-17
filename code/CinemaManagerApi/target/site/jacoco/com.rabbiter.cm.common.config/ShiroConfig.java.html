@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ShiroConfig.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">CinemaManagerApi</a> &gt; <a href="index.source.html" class="el_package">com.rabbiter.cm.common.config</a> &gt; <span class="el_source">ShiroConfig.java</span></div><h1>ShiroConfig.java</h1><pre class="source lang-java linenums">package com.rabbiter.cm.common.config;
+
+import com.rabbiter.cm.shiro.JwtFilter;
+import com.rabbiter.cm.shiro.realms.CustomerRealm;
+import org.apache.shiro.mgt.DefaultSessionStorageEvaluator;
+import org.apache.shiro.mgt.DefaultSubjectDAO;
+import org.apache.shiro.realm.Realm;
+import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
+import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import javax.servlet.Filter;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+/**
+ * 配置shiro安全框架
+ */
+@Configuration
+<span class="fc" id="L22">public class ShiroConfig {</span>
+
+    // 创建shiroFilter
+    @Bean(&quot;shiroFilter&quot;)
+    public ShiroFilterFactoryBean getShiroFilterFactoryBean(DefaultWebSecurityManager defaultWebSecurityManager) {
+<span class="fc" id="L27">        ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();</span>
+
+        // 给shiroFilter设置安全管理器
+<span class="fc" id="L30">        shiroFilterFactoryBean.setSecurityManager(defaultWebSecurityManager);</span>
+
+        // 配置受限资源
+<span class="fc" id="L33">        Map&lt;String, String&gt; map = new LinkedHashMap&lt;&gt;();</span>
+        // 放行注册和登录
+<span class="fc" id="L35">        map.put(&quot;/sysUser/register&quot;, &quot;anon&quot;);</span>
+<span class="fc" id="L36">        map.put(&quot;/sysUser/login&quot;, &quot;anon&quot;);</span>
+        // 放行图片查询
+<span class="fc" id="L38">        map.put(&quot;/images/**&quot;, &quot;anon&quot;);</span>
+        // 请求这个资源需要认证与授权
+<span class="fc" id="L40">        map.put(&quot;/sysCinema/update&quot;, &quot;jwt&quot;);</span>
+        // 放行影院查询请求
+<span class="fc" id="L42">        map.put(&quot;/sysCinema/**&quot;, &quot;anon&quot;);</span>
+        // 放行电影查找相关请求
+<span class="fc" id="L44">        map.put(&quot;/sysMovie/find/**&quot;, &quot;anon&quot;);</span>
+        // 放行电影类别查找相关请求
+<span class="fc" id="L46">        map.put(&quot;/sysMovieCategory/find/**&quot;, &quot;anon&quot;);</span>
+        // 放行电影场次查找相关请求
+<span class="fc" id="L48">        map.put(&quot;/sysSession/find/**&quot;, &quot;anon&quot;);</span>
+        // 请求这个资源需要认证与授权
+<span class="fc" id="L50">        map.put(&quot;/**&quot;, &quot;jwt&quot;);</span>
+
+        // 添加自己的过滤器并且取名为jwt
+<span class="fc" id="L53">        Map&lt;String, Filter&gt; filterMap = new HashMap&lt;String, Filter&gt;(1);</span>
+<span class="fc" id="L54">        filterMap.put(&quot;jwt&quot;, new JwtFilter());</span>
+<span class="fc" id="L55">        shiroFilterFactoryBean.setFilters(filterMap);</span>
+
+        //设置认证规则
+<span class="fc" id="L58">        shiroFilterFactoryBean.setFilterChainDefinitionMap(map);</span>
+<span class="fc" id="L59">        return shiroFilterFactoryBean;</span>
+    }
+
+    //创建安全管理器
+    @Bean
+    public DefaultWebSecurityManager getDefaultWebSecurityManager(Realm realm) {
+<span class="fc" id="L65">        DefaultWebSecurityManager defaultWebSecurityManager = new DefaultWebSecurityManager();</span>
+
+        //给安全管理器设置realm
+<span class="fc" id="L68">        defaultWebSecurityManager.setRealm(realm);</span>
+
+        //关闭shiro自带的session，使得不保存登录状态，每次使用token进行验证
+<span class="fc" id="L71">        DefaultSubjectDAO subjectDAO = new DefaultSubjectDAO();</span>
+<span class="fc" id="L72">        DefaultSessionStorageEvaluator defaultSessionStorageEvaluator = new DefaultSessionStorageEvaluator();</span>
+<span class="fc" id="L73">        defaultSessionStorageEvaluator.setSessionStorageEnabled(false);</span>
+<span class="fc" id="L74">        subjectDAO.setSessionStorageEvaluator(defaultSessionStorageEvaluator);</span>
+<span class="fc" id="L75">        defaultWebSecurityManager.setSubjectDAO(subjectDAO);</span>
+
+<span class="fc" id="L77">        return defaultWebSecurityManager;</span>
+    }
+
+    //创建自定义realm
+    @Bean(name = &quot;realm&quot;)
+    public Realm getRealm() {
+<span class="fc" id="L83">        CustomerRealm realm = new CustomerRealm();</span>
+<span class="fc" id="L84">        return realm;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

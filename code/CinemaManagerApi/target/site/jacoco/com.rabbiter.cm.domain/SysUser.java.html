@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SysUser.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">CinemaManagerApi</a> &gt; <a href="index.source.html" class="el_package">com.rabbiter.cm.domain</a> &gt; <span class="el_source">SysUser.java</span></div><h1>SysUser.java</h1><pre class="source lang-java linenums">package com.rabbiter.cm.domain;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+import java.io.Serializable;
+import java.util.Objects;
+
+public class SysUser implements Serializable {
+<span class="fc" id="L10">    private final static Long serialVersionUID = 1L;</span>
+    //用户id
+    private Long userId;
+    //用户名
+    @NotBlank(message = &quot;用户名不能为空&quot;)
+    private String userName;
+    //密码
+    @NotBlank(message = &quot;密码不能为空&quot;)
+    private String password;
+    //盐
+    private String salt;
+    //邮箱
+    @Email(message = &quot;邮箱格式有误&quot;)
+    private String email;
+    //电话号码
+    @Pattern(regexp = &quot;^1[3|4|5|7|8]\\d{9}$&quot;, message = &quot;电话号码格式有错&quot;)
+    private String phoneNumber;
+    //性别
+    private Boolean sex;
+    //用户头像
+    private String userPicture;
+    //用户对应的角色id，为简化操作，采用1对1
+    private Long roleId;
+
+    private String birthday;
+
+    private String autograph;
+
+    //用户的角色
+    private SysRole sysRole;
+
+<span class="fc" id="L41">    public SysUser() {</span>
+<span class="fc" id="L42">    }</span>
+
+<span class="nc" id="L44">    public SysUser(Long userId, String userName, String password, String salt, String email, String phoneNumber, Boolean sex, String userPicture, Long roleId, String birthday, String autograph, SysRole sysRole) {</span>
+<span class="nc" id="L45">        this.userId = userId;</span>
+<span class="nc" id="L46">        this.userName = userName;</span>
+<span class="nc" id="L47">        this.password = password;</span>
+<span class="nc" id="L48">        this.salt = salt;</span>
+<span class="nc" id="L49">        this.email = email;</span>
+<span class="nc" id="L50">        this.phoneNumber = phoneNumber;</span>
+<span class="nc" id="L51">        this.sex = sex;</span>
+<span class="nc" id="L52">        this.userPicture = userPicture;</span>
+<span class="nc" id="L53">        this.roleId = roleId;</span>
+<span class="nc" id="L54">        this.birthday = birthday;</span>
+<span class="nc" id="L55">        this.autograph = autograph;</span>
+<span class="nc" id="L56">        this.sysRole = sysRole;</span>
+<span class="nc" id="L57">    }</span>
+
+    public Long getUserId() {
+<span class="fc" id="L60">        return userId;</span>
+    }
+
+    public void setUserId(Long userId) {
+<span class="fc" id="L64">        this.userId = userId;</span>
+<span class="fc" id="L65">    }</span>
+
+    public String getUserName() {
+<span class="fc" id="L68">        return userName;</span>
+    }
+
+    public void setUserName(String userName) {
+<span class="fc" id="L72">        this.userName = userName;</span>
+<span class="fc" id="L73">    }</span>
+
+    public String getPassword() {
+<span class="fc" id="L76">        return password;</span>
+    }
+
+    public void setPassword(String password) {
+<span class="fc" id="L80">        this.password = password;</span>
+<span class="fc" id="L81">    }</span>
+
+    public String getSalt() {
+<span class="fc" id="L84">        return salt;</span>
+    }
+
+    public void setSalt(String salt) {
+<span class="fc" id="L88">        this.salt = salt;</span>
+<span class="fc" id="L89">    }</span>
+
+    public String getEmail() {
+<span class="nc" id="L92">        return email;</span>
+    }
+
+    public void setEmail(String email) {
+<span class="nc" id="L96">        this.email = email;</span>
+<span class="nc" id="L97">    }</span>
+
+    public String getPhoneNumber() {
+<span class="nc" id="L100">        return phoneNumber;</span>
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+<span class="nc" id="L104">        this.phoneNumber = phoneNumber;</span>
+<span class="nc" id="L105">    }</span>
+
+    public Boolean getSex() {
+<span class="nc" id="L108">        return sex;</span>
+    }
+
+    public void setSex(Boolean sex) {
+<span class="nc" id="L112">        this.sex = sex;</span>
+<span class="nc" id="L113">    }</span>
+
+    public String getUserPicture() {
+<span class="nc" id="L116">        return userPicture;</span>
+    }
+
+    public void setUserPicture(String userPicture) {
+<span class="nc" id="L120">        this.userPicture = userPicture;</span>
+<span class="nc" id="L121">    }</span>
+
+    public Long getRoleId() {
+<span class="nc" id="L124">        return roleId;</span>
+    }
+
+    public void setRoleId(Long roleId) {
+<span class="nc" id="L128">        this.roleId = roleId;</span>
+<span class="nc" id="L129">    }</span>
+
+    public String getBirthday() {
+<span class="nc" id="L132">        return birthday;</span>
+    }
+
+    public void setBirthday(String birthday) {
+<span class="nc" id="L136">        this.birthday = birthday;</span>
+<span class="nc" id="L137">    }</span>
+
+    public String getAutograph() {
+<span class="nc" id="L140">        return autograph;</span>
+    }
+
+    public void setAutograph(String autograph) {
+<span class="nc" id="L144">        this.autograph = autograph;</span>
+<span class="nc" id="L145">    }</span>
+
+    public SysRole getSysRole() {
+<span class="nc" id="L148">        return sysRole;</span>
+    }
+
+    public void setSysRole(SysRole sysRole) {
+<span class="nc" id="L152">        this.sysRole = sysRole;</span>
+<span class="nc" id="L153">    }</span>
+
+    @Override
+    public boolean equals(Object o) {
+<span class="nc bnc" id="L157" title="All 2 branches missed.">        if (this == o) return true;</span>
+<span class="nc bnc" id="L158" title="All 4 branches missed.">        if (o == null || getClass() != o.getClass()) return false;</span>
+<span class="nc" id="L159">        SysUser sysUser = (SysUser) o;</span>
+<span class="nc bnc" id="L160" title="All 24 branches missed.">        return Objects.equals(userId, sysUser.userId) &amp;&amp; Objects.equals(userName, sysUser.userName) &amp;&amp; Objects.equals(password, sysUser.password) &amp;&amp; Objects.equals(salt, sysUser.salt) &amp;&amp; Objects.equals(email, sysUser.email) &amp;&amp; Objects.equals(phoneNumber, sysUser.phoneNumber) &amp;&amp; Objects.equals(sex, sysUser.sex) &amp;&amp; Objects.equals(userPicture, sysUser.userPicture) &amp;&amp; Objects.equals(roleId, sysUser.roleId) &amp;&amp; Objects.equals(birthday, sysUser.birthday) &amp;&amp; Objects.equals(autograph, sysUser.autograph) &amp;&amp; Objects.equals(sysRole, sysUser.sysRole);</span>
+    }
+
+    @Override
+    public int hashCode() {
+<span class="nc" id="L165">        return Objects.hash(userId, userName, password, salt, email, phoneNumber, sex, userPicture, roleId, birthday, autograph, sysRole);</span>
+    }
+
+    @Override
+    public String toString() {
+<span class="nc" id="L170">        return &quot;SysUser{&quot; +</span>
+                &quot;userId=&quot; + userId +
+                &quot;, userName='&quot; + userName + '\'' +
+                &quot;, password='&quot; + password + '\'' +
+                &quot;, salt='&quot; + salt + '\'' +
+                &quot;, email='&quot; + email + '\'' +
+                &quot;, phoneNumber='&quot; + phoneNumber + '\'' +
+                &quot;, sex=&quot; + sex +
+                &quot;, userPicture='&quot; + userPicture + '\'' +
+                &quot;, roleId=&quot; + roleId +
+                &quot;, birthday='&quot; + birthday + '\'' +
+                &quot;, autograph='&quot; + autograph + '\'' +
+                &quot;, sysRole=&quot; + sysRole +
+                '}';
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

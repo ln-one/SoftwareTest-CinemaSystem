@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SysMovie.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">CinemaManagerApi</a> &gt; <a href="index.source.html" class="el_package">com.rabbiter.cm.domain</a> &gt; <span class="el_source">SysMovie.java</span></div><h1>SysMovie.java</h1><pre class="source lang-java linenums">package com.rabbiter.cm.domain;
+
+
+import javax.validation.constraints.NotBlank;
+import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
+import java.util.Objects;
+
+public class SysMovie implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
+    private Long movieId;
+
+    //电影名称
+    @NotBlank(message = &quot;电影名称不能为空&quot;)
+    private String movieName;
+
+    //电影时长
+    private Integer movieLength;
+
+    //电影海报
+    private String moviePoster;
+
+    private String movieArea;
+
+    //上映日期
+    private Date releaseDate;
+
+    //电影总票房
+    private Double movieBoxOffice;
+
+    //电影简介
+    private String movieIntroduction;
+
+    //电影图集
+    private String moviePictures;
+
+    //电影的类别
+    private List&lt;SysMovieCategory&gt; movieCategoryList;
+
+<span class="fc" id="L43">    public SysMovie() {</span>
+<span class="fc" id="L44">    }</span>
+
+<span class="nc" id="L46">    public SysMovie(Long movieId, String movieName, Integer movieLength, String moviePoster, String movieArea, Date releaseDate, Double movieBoxOffice, String movieIntroduction, String moviePictures, List&lt;SysMovieCategory&gt; movieCategoryList) {</span>
+<span class="nc" id="L47">        this.movieId = movieId;</span>
+<span class="nc" id="L48">        this.movieName = movieName;</span>
+<span class="nc" id="L49">        this.movieLength = movieLength;</span>
+<span class="nc" id="L50">        this.moviePoster = moviePoster;</span>
+<span class="nc" id="L51">        this.movieArea = movieArea;</span>
+<span class="nc" id="L52">        this.releaseDate = releaseDate;</span>
+<span class="nc" id="L53">        this.movieBoxOffice = movieBoxOffice;</span>
+<span class="nc" id="L54">        this.movieIntroduction = movieIntroduction;</span>
+<span class="nc" id="L55">        this.moviePictures = moviePictures;</span>
+<span class="nc" id="L56">        this.movieCategoryList = movieCategoryList;</span>
+<span class="nc" id="L57">    }</span>
+
+    public Long getMovieId() {
+<span class="nc" id="L60">        return movieId;</span>
+    }
+
+    public void setMovieId(Long movieId) {
+<span class="fc" id="L64">        this.movieId = movieId;</span>
+<span class="fc" id="L65">    }</span>
+
+    public String getMovieName() {
+<span class="fc" id="L68">        return movieName;</span>
+    }
+
+    public void setMovieName(String movieName) {
+<span class="fc" id="L72">        this.movieName = movieName;</span>
+<span class="fc" id="L73">    }</span>
+
+    public Integer getMovieLength() {
+<span class="nc" id="L76">        return movieLength;</span>
+    }
+
+    public void setMovieLength(Integer movieLength) {
+<span class="fc" id="L80">        this.movieLength = movieLength;</span>
+<span class="fc" id="L81">    }</span>
+
+    public String getMoviePoster() {
+<span class="nc" id="L84">        return moviePoster;</span>
+    }
+
+    public void setMoviePoster(String moviePoster) {
+<span class="nc" id="L88">        this.moviePoster = moviePoster;</span>
+<span class="nc" id="L89">    }</span>
+
+    public String getMovieArea() {
+<span class="nc" id="L92">        return movieArea;</span>
+    }
+
+    public void setMovieArea(String movieArea) {
+<span class="fc" id="L96">        this.movieArea = movieArea;</span>
+<span class="fc" id="L97">    }</span>
+
+    public Date getReleaseDate() {
+<span class="nc" id="L100">        return releaseDate;</span>
+    }
+
+    public void setReleaseDate(Date releaseDate) {
+<span class="nc" id="L104">        this.releaseDate = releaseDate;</span>
+<span class="nc" id="L105">    }</span>
+
+    public Double getMovieBoxOffice() {
+<span class="nc" id="L108">        return movieBoxOffice;</span>
+    }
+
+    public void setMovieBoxOffice(Double movieBoxOffice) {
+<span class="fc" id="L112">        this.movieBoxOffice = movieBoxOffice;</span>
+<span class="fc" id="L113">    }</span>
+
+    public String getMovieIntroduction() {
+<span class="nc" id="L116">        return movieIntroduction;</span>
+    }
+
+    public void setMovieIntroduction(String movieIntroduction) {
+<span class="nc" id="L120">        this.movieIntroduction = movieIntroduction;</span>
+<span class="nc" id="L121">    }</span>
+
+    public String getMoviePictures() {
+<span class="nc" id="L124">        return moviePictures;</span>
+    }
+
+    public void setMoviePictures(String moviePictures) {
+<span class="nc" id="L128">        this.moviePictures = moviePictures;</span>
+<span class="nc" id="L129">    }</span>
+
+    public List&lt;SysMovieCategory&gt; getMovieCategoryList() {
+<span class="nc" id="L132">        return movieCategoryList;</span>
+    }
+
+    public void setMovieCategoryList(List&lt;SysMovieCategory&gt; movieCategoryList) {
+<span class="nc" id="L136">        this.movieCategoryList = movieCategoryList;</span>
+<span class="nc" id="L137">    }</span>
+
+    @Override
+    public boolean equals(Object o) {
+<span class="nc bnc" id="L141" title="All 2 branches missed.">        if (this == o) return true;</span>
+<span class="nc bnc" id="L142" title="All 4 branches missed.">        if (o == null || getClass() != o.getClass()) return false;</span>
+<span class="nc" id="L143">        SysMovie sysMovie = (SysMovie) o;</span>
+<span class="nc bnc" id="L144" title="All 20 branches missed.">        return Objects.equals(movieId, sysMovie.movieId) &amp;&amp; Objects.equals(movieName, sysMovie.movieName) &amp;&amp; Objects.equals(movieLength, sysMovie.movieLength) &amp;&amp; Objects.equals(moviePoster, sysMovie.moviePoster) &amp;&amp; Objects.equals(movieArea, sysMovie.movieArea) &amp;&amp; Objects.equals(releaseDate, sysMovie.releaseDate) &amp;&amp; Objects.equals(movieBoxOffice, sysMovie.movieBoxOffice) &amp;&amp; Objects.equals(movieIntroduction, sysMovie.movieIntroduction) &amp;&amp; Objects.equals(moviePictures, sysMovie.moviePictures) &amp;&amp; Objects.equals(movieCategoryList, sysMovie.movieCategoryList);</span>
+    }
+
+    @Override
+    public int hashCode() {
+<span class="nc" id="L149">        return Objects.hash(movieId, movieName, movieLength, moviePoster, movieArea, releaseDate, movieBoxOffice, movieIntroduction, moviePictures, movieCategoryList);</span>
+    }
+
+    @Override
+    public String toString() {
+<span class="nc" id="L154">        return &quot;SysMovie{&quot; +</span>
+                &quot;movieId=&quot; + movieId +
+                &quot;, movieName='&quot; + movieName + '\'' +
+                &quot;, movieLength=&quot; + movieLength +
+                &quot;, moviePoster='&quot; + moviePoster + '\'' +
+                &quot;, movieArea='&quot; + movieArea + '\'' +
+                &quot;, releaseDate=&quot; + releaseDate +
+                &quot;, movieBoxOffice=&quot; + movieBoxOffice +
+                &quot;, movieIntroduction='&quot; + movieIntroduction + '\'' +
+                &quot;, moviePictures='&quot; + moviePictures + '\'' +
+                &quot;, movieCategoryList=&quot; + movieCategoryList +
+                '}';
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

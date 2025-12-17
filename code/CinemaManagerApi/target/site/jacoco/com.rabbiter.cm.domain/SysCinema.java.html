@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SysCinema.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">CinemaManagerApi</a> &gt; <a href="index.source.html" class="el_package">com.rabbiter.cm.domain</a> &gt; <span class="el_source">SysCinema.java</span></div><h1>SysCinema.java</h1><pre class="source lang-java linenums">package com.rabbiter.cm.domain;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import javax.validation.constraints.NotBlank;
+import java.io.Serializable;
+import java.util.List;
+import java.util.Objects;
+
+public class SysCinema implements Serializable {
+<span class="fc" id="L11">    private final static Long serialVersionUID = 1L;</span>
+
+    private Long cinemaId;
+
+    @NotBlank(message = &quot;影院名称不能为空&quot;)
+    private String cinemaName;
+
+    private String hallCategoryList;
+
+    private String cinemaPicture;
+
+    private String cinemaAddress;
+
+    private String cinemaPhone;
+
+    @JsonFormat(locale = &quot;zh&quot;, timezone = &quot;GMT+8&quot;, pattern = &quot;HH:mm&quot;)
+    private String workStartTime;
+
+    @JsonFormat(locale = &quot;zh&quot;, timezone = &quot;GMT+8&quot;, pattern = &quot;HH:mm&quot;)
+    private String workEndTime;
+
+    //当前影院上映的所有电影，规则：上映的电影指包括今天在内，未来5天有安排目标影片的场次
+    private List&lt;SysMovie&gt; sysMovieList;
+
+<span class="fc" id="L35">    public SysCinema() {</span>
+<span class="fc" id="L36">    }</span>
+
+<span class="nc" id="L38">    public SysCinema(Long cinemaId, String cinemaName, String hallCategoryList, String cinemaPicture, String cinemaAddress, String cinemaPhone, String workStartTime, String workEndTime, List&lt;SysMovie&gt; sysMovieList) {</span>
+<span class="nc" id="L39">        this.cinemaId = cinemaId;</span>
+<span class="nc" id="L40">        this.cinemaName = cinemaName;</span>
+<span class="nc" id="L41">        this.hallCategoryList = hallCategoryList;</span>
+<span class="nc" id="L42">        this.cinemaPicture = cinemaPicture;</span>
+<span class="nc" id="L43">        this.cinemaAddress = cinemaAddress;</span>
+<span class="nc" id="L44">        this.cinemaPhone = cinemaPhone;</span>
+<span class="nc" id="L45">        this.workStartTime = workStartTime;</span>
+<span class="nc" id="L46">        this.workEndTime = workEndTime;</span>
+<span class="nc" id="L47">        this.sysMovieList = sysMovieList;</span>
+<span class="nc" id="L48">    }</span>
+
+    public Long getCinemaId() {
+<span class="fc" id="L51">        return cinemaId;</span>
+    }
+
+    public void setCinemaId(Long cinemaId) {
+<span class="fc" id="L55">        this.cinemaId = cinemaId;</span>
+<span class="fc" id="L56">    }</span>
+
+    public String getCinemaName() {
+<span class="fc" id="L59">        return cinemaName;</span>
+    }
+
+    public void setCinemaName(String cinemaName) {
+<span class="fc" id="L63">        this.cinemaName = cinemaName;</span>
+<span class="fc" id="L64">    }</span>
+
+    public String getHallCategoryList() {
+<span class="nc" id="L67">        return hallCategoryList;</span>
+    }
+
+    public void setHallCategoryList(String hallCategoryList) {
+<span class="nc" id="L71">        this.hallCategoryList = hallCategoryList;</span>
+<span class="nc" id="L72">    }</span>
+
+    public String getCinemaPicture() {
+<span class="nc" id="L75">        return cinemaPicture;</span>
+    }
+
+    public void setCinemaPicture(String cinemaPicture) {
+<span class="nc" id="L79">        this.cinemaPicture = cinemaPicture;</span>
+<span class="nc" id="L80">    }</span>
+
+    public String getCinemaAddress() {
+<span class="fc" id="L83">        return cinemaAddress;</span>
+    }
+
+    public void setCinemaAddress(String cinemaAddress) {
+<span class="fc" id="L87">        this.cinemaAddress = cinemaAddress;</span>
+<span class="fc" id="L88">    }</span>
+
+    public String getCinemaPhone() {
+<span class="fc" id="L91">        return cinemaPhone;</span>
+    }
+
+    public void setCinemaPhone(String cinemaPhone) {
+<span class="fc" id="L95">        this.cinemaPhone = cinemaPhone;</span>
+<span class="fc" id="L96">    }</span>
+
+    public String getWorkStartTime() {
+<span class="nc" id="L99">        return workStartTime;</span>
+    }
+
+    public void setWorkStartTime(String workStartTime) {
+<span class="nc" id="L103">        this.workStartTime = workStartTime;</span>
+<span class="nc" id="L104">    }</span>
+
+    public String getWorkEndTime() {
+<span class="nc" id="L107">        return workEndTime;</span>
+    }
+
+    public void setWorkEndTime(String workEndTime) {
+<span class="nc" id="L111">        this.workEndTime = workEndTime;</span>
+<span class="nc" id="L112">    }</span>
+
+    public List&lt;SysMovie&gt; getSysMovieList() {
+<span class="nc" id="L115">        return sysMovieList;</span>
+    }
+
+    public void setSysMovieList(List&lt;SysMovie&gt; sysMovieList) {
+<span class="nc" id="L119">        this.sysMovieList = sysMovieList;</span>
+<span class="nc" id="L120">    }</span>
+
+    @Override
+    public boolean equals(Object o) {
+<span class="nc bnc" id="L124" title="All 2 branches missed.">        if (this == o) return true;</span>
+<span class="nc bnc" id="L125" title="All 4 branches missed.">        if (o == null || getClass() != o.getClass()) return false;</span>
+<span class="nc" id="L126">        SysCinema sysCinema = (SysCinema) o;</span>
+<span class="nc bnc" id="L127" title="All 18 branches missed.">        return Objects.equals(cinemaId, sysCinema.cinemaId) &amp;&amp; Objects.equals(cinemaName, sysCinema.cinemaName) &amp;&amp; Objects.equals(hallCategoryList, sysCinema.hallCategoryList) &amp;&amp; Objects.equals(cinemaPicture, sysCinema.cinemaPicture) &amp;&amp; Objects.equals(cinemaAddress, sysCinema.cinemaAddress) &amp;&amp; Objects.equals(cinemaPhone, sysCinema.cinemaPhone) &amp;&amp; Objects.equals(workStartTime, sysCinema.workStartTime) &amp;&amp; Objects.equals(workEndTime, sysCinema.workEndTime) &amp;&amp; Objects.equals(sysMovieList, sysCinema.sysMovieList);</span>
+    }
+
+    @Override
+    public int hashCode() {
+<span class="nc" id="L132">        return Objects.hash(cinemaId, cinemaName, hallCategoryList, cinemaPicture, cinemaAddress, cinemaPhone, workStartTime, workEndTime, sysMovieList);</span>
+    }
+
+    @Override
+    public String toString() {
+<span class="nc" id="L137">        return &quot;SysCinema{&quot; +</span>
+                &quot;cinemaId=&quot; + cinemaId +
+                &quot;, cinemaName='&quot; + cinemaName + '\'' +
+                &quot;, hallCategoryList='&quot; + hallCategoryList + '\'' +
+                &quot;, cinemaPicture='&quot; + cinemaPicture + '\'' +
+                &quot;, cinemaAddress='&quot; + cinemaAddress + '\'' +
+                &quot;, cinemaPhone='&quot; + cinemaPhone + '\'' +
+                &quot;, workStartTime='&quot; + workStartTime + '\'' +
+                &quot;, workEndTime='&quot; + workEndTime + '\'' +
+                &quot;, sysMovieList=&quot; + sysMovieList +
+                '}';
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

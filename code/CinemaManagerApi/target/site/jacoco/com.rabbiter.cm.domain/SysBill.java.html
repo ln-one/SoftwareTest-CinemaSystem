@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SysBill.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">CinemaManagerApi</a> &gt; <a href="index.source.html" class="el_package">com.rabbiter.cm.domain</a> &gt; <span class="el_source">SysBill.java</span></div><h1>SysBill.java</h1><pre class="source lang-java linenums">package com.rabbiter.cm.domain;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
+import java.util.Date;
+import java.util.Objects;
+
+/**
+ * 订单实体类
+ */
+public class SysBill implements Serializable {
+
+<span class="fc" id="L14">    private static final Long serialVersionUID = 1L;</span>
+
+    private Long billId;
+
+    //订单状态，0表示未支付，1表示已完成
+    private Boolean payState;
+
+    //下订单的用户id
+    @NotNull(message = &quot;下订单用户不能为空&quot;)
+    private Long userId;
+
+    //订单所属的场次
+    @NotNull(message = &quot;订单所属场次不能为空&quot;)
+    private Long sessionId;
+
+    //订单的座位，如：1排10号、A排5号
+    @NotBlank(message = &quot;订单所选座位不能为空&quot;)
+    private String seats;
+
+    private Boolean cancelState;
+
+    private Boolean cancelRole;
+
+    private Date createTime;
+
+    private Date deadline;
+
+    private Date cancelTime;
+
+    // 用户名作模糊查询条件
+    private String queryByUserName;
+
+    // 管理员操作识别，及备注内容。管理员操作点单，或添加或修改，必须要填写备注信息，购票子系统不需要填写，并清空
+    private String remark;
+    // 删除状态，1：删除，0：未删除
+    private Boolean delState;
+
+    //多表连接
+    private SysSession sysSession;
+
+    private SysUser sysUser;
+
+<span class="fc" id="L56">    public SysBill() {</span>
+<span class="fc" id="L57">    }</span>
+
+<span class="nc" id="L59">    public SysBill(Long billId, Boolean payState, Long userId, Long sessionId, String seats, Boolean cancelState, Boolean cancelRole, Date createTime, Date deadline, Date cancelTime, String queryByUserName, String remark, Boolean delState, SysSession sysSession, SysUser sysUser) {</span>
+<span class="nc" id="L60">        this.billId = billId;</span>
+<span class="nc" id="L61">        this.payState = payState;</span>
+<span class="nc" id="L62">        this.userId = userId;</span>
+<span class="nc" id="L63">        this.sessionId = sessionId;</span>
+<span class="nc" id="L64">        this.seats = seats;</span>
+<span class="nc" id="L65">        this.cancelState = cancelState;</span>
+<span class="nc" id="L66">        this.cancelRole = cancelRole;</span>
+<span class="nc" id="L67">        this.createTime = createTime;</span>
+<span class="nc" id="L68">        this.deadline = deadline;</span>
+<span class="nc" id="L69">        this.cancelTime = cancelTime;</span>
+<span class="nc" id="L70">        this.queryByUserName = queryByUserName;</span>
+<span class="nc" id="L71">        this.remark = remark;</span>
+<span class="nc" id="L72">        this.delState = delState;</span>
+<span class="nc" id="L73">        this.sysSession = sysSession;</span>
+<span class="nc" id="L74">        this.sysUser = sysUser;</span>
+<span class="nc" id="L75">    }</span>
+
+    public Long getBillId() {
+<span class="fc" id="L78">        return billId;</span>
+    }
+
+    public void setBillId(Long billId) {
+<span class="fc" id="L82">        this.billId = billId;</span>
+<span class="fc" id="L83">    }</span>
+
+    public Boolean getPayState() {
+<span class="nc" id="L86">        return payState;</span>
+    }
+
+    public void setPayState(Boolean payState) {
+<span class="nc" id="L90">        this.payState = payState;</span>
+<span class="nc" id="L91">    }</span>
+
+    public Long getUserId() {
+<span class="fc" id="L94">        return userId;</span>
+    }
+
+    public void setUserId(Long userId) {
+<span class="fc" id="L98">        this.userId = userId;</span>
+<span class="fc" id="L99">    }</span>
+
+    public Long getSessionId() {
+<span class="fc" id="L102">        return sessionId;</span>
+    }
+
+    public void setSessionId(Long sessionId) {
+<span class="fc" id="L106">        this.sessionId = sessionId;</span>
+<span class="fc" id="L107">    }</span>
+
+    public String getSeats() {
+<span class="nc" id="L110">        return seats;</span>
+    }
+
+    public void setSeats(String seats) {
+<span class="fc" id="L114">        this.seats = seats;</span>
+<span class="fc" id="L115">    }</span>
+
+    public Boolean getCancelState() {
+<span class="nc" id="L118">        return cancelState;</span>
+    }
+
+    public void setCancelState(Boolean cancelState) {
+<span class="nc" id="L122">        this.cancelState = cancelState;</span>
+<span class="nc" id="L123">    }</span>
+
+    public Boolean getCancelRole() {
+<span class="nc" id="L126">        return cancelRole;</span>
+    }
+
+    public void setCancelRole(Boolean cancelRole) {
+<span class="nc" id="L130">        this.cancelRole = cancelRole;</span>
+<span class="nc" id="L131">    }</span>
+
+    public Date getCreateTime() {
+<span class="nc" id="L134">        return createTime;</span>
+    }
+
+    public void setCreateTime(Date createTime) {
+<span class="nc" id="L138">        this.createTime = createTime;</span>
+<span class="nc" id="L139">    }</span>
+
+    public Date getDeadline() {
+<span class="nc" id="L142">        return deadline;</span>
+    }
+
+    public void setDeadline(Date deadline) {
+<span class="nc" id="L146">        this.deadline = deadline;</span>
+<span class="nc" id="L147">    }</span>
+
+    public Date getCancelTime() {
+<span class="nc" id="L150">        return cancelTime;</span>
+    }
+
+    public void setCancelTime(Date cancelTime) {
+<span class="nc" id="L154">        this.cancelTime = cancelTime;</span>
+<span class="nc" id="L155">    }</span>
+
+    public String getQueryByUserName() {
+<span class="nc" id="L158">        return queryByUserName;</span>
+    }
+
+    public void setQueryByUserName(String queryByUserName) {
+<span class="nc" id="L162">        this.queryByUserName = queryByUserName;</span>
+<span class="nc" id="L163">    }</span>
+
+    public String getRemark() {
+<span class="nc" id="L166">        return remark;</span>
+    }
+
+    public void setRemark(String remark) {
+<span class="nc" id="L170">        this.remark = remark;</span>
+<span class="nc" id="L171">    }</span>
+
+    public Boolean getDelState() {
+<span class="nc" id="L174">        return delState;</span>
+    }
+
+    public void setDelState(Boolean delState) {
+<span class="nc" id="L178">        this.delState = delState;</span>
+<span class="nc" id="L179">    }</span>
+
+    public SysSession getSysSession() {
+<span class="nc" id="L182">        return sysSession;</span>
+    }
+
+    public void setSysSession(SysSession sysSession) {
+<span class="nc" id="L186">        this.sysSession = sysSession;</span>
+<span class="nc" id="L187">    }</span>
+
+    public SysUser getSysUser() {
+<span class="nc" id="L190">        return sysUser;</span>
+    }
+
+    public void setSysUser(SysUser sysUser) {
+<span class="nc" id="L194">        this.sysUser = sysUser;</span>
+<span class="nc" id="L195">    }</span>
+
+    @Override
+    public String toString() {
+<span class="nc" id="L199">        return &quot;SysBill{&quot; +</span>
+                &quot;billId=&quot; + billId +
+                &quot;, payState=&quot; + payState +
+                &quot;, userId=&quot; + userId +
+                &quot;, sessionId=&quot; + sessionId +
+                &quot;, seats='&quot; + seats + '\'' +
+                &quot;, cancelState=&quot; + cancelState +
+                &quot;, cancelRole=&quot; + cancelRole +
+                &quot;, createTime=&quot; + createTime +
+                &quot;, deadline=&quot; + deadline +
+                &quot;, cancelTime=&quot; + cancelTime +
+                &quot;, queryByUserName='&quot; + queryByUserName + '\'' +
+                &quot;, remark='&quot; + remark + '\'' +
+                &quot;, delState=&quot; + delState +
+                &quot;, sysSession=&quot; + sysSession +
+                &quot;, sysUser=&quot; + sysUser +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+<span class="pc bpc" id="L220" title="1 of 2 branches missed.">        if (this == o) return true;</span>
+<span class="nc bnc" id="L221" title="All 4 branches missed.">        if (o == null || getClass() != o.getClass()) return false;</span>
+<span class="nc" id="L222">        SysBill sysBill = (SysBill) o;</span>
+<span class="nc bnc" id="L223" title="All 30 branches missed.">        return Objects.equals(billId, sysBill.billId) &amp;&amp; Objects.equals(payState, sysBill.payState) &amp;&amp; Objects.equals(userId, sysBill.userId) &amp;&amp; Objects.equals(sessionId, sysBill.sessionId) &amp;&amp; Objects.equals(seats, sysBill.seats) &amp;&amp; Objects.equals(cancelState, sysBill.cancelState) &amp;&amp; Objects.equals(cancelRole, sysBill.cancelRole) &amp;&amp; Objects.equals(createTime, sysBill.createTime) &amp;&amp; Objects.equals(deadline, sysBill.deadline) &amp;&amp; Objects.equals(cancelTime, sysBill.cancelTime) &amp;&amp; Objects.equals(queryByUserName, sysBill.queryByUserName) &amp;&amp; Objects.equals(remark, sysBill.remark) &amp;&amp; Objects.equals(delState, sysBill.delState) &amp;&amp; Objects.equals(sysSession, sysBill.sysSession) &amp;&amp; Objects.equals(sysUser, sysBill.sysUser);</span>
+    }
+
+    @Override
+    public int hashCode() {
+<span class="nc" id="L228">        return Objects.hash(billId, payState, userId, sessionId, seats, cancelState, cancelRole, createTime, deadline, cancelTime, queryByUserName, remark, delState, sysSession, sysUser);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

@@ -1,0 +1,10 @@
+com/rabbiter/cm/service/SysResourceServiceTest.class
+com/rabbiter/cm/CinemaManagerApplicationTests.class
+com/rabbiter/cm/service/SysHallServiceTest.class
+com/rabbiter/cm/service/SysUserServiceTest.class
+com/rabbiter/cm/service/SysCinemaServiceTest.class
+com/rabbiter/cm/service/SysMovieCategoryServiceTest.class
+com/rabbiter/cm/service/SysBillServiceTest.class
+com/rabbiter/cm/service/SysMovieServiceTest.class
+com/rabbiter/cm/service/SysSessionServiceTest.class
+com/rabbiter/cm/service/SysRoleServiceTest.class

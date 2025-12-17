@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FileUploadController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">CinemaManagerApi</a> &gt; <a href="index.source.html" class="el_package">com.rabbiter.cm.controller</a> &gt; <span class="el_source">FileUploadController.java</span></div><h1>FileUploadController.java</h1><pre class="source lang-java linenums">package com.rabbiter.cm.controller;
+
+import com.rabbiter.cm.common.file.FileUploadUtils;
+import com.rabbiter.cm.common.response.ResponseResult;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.util.ResourceUtils;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
+/**
+ * 封装图片上传请求
+ */
+@RestController
+@RequestMapping(&quot;/upload&quot;)
+<span class="fc" id="L22">public class FileUploadController {</span>
+<span class="fc" id="L23">    Logger log = LoggerFactory.getLogger(this.getClass());</span>
+
+    @PostMapping(&quot;/user&quot;)
+    public ResponseResult uploadUser(@RequestParam(&quot;file&quot;) MultipartFile file) throws IOException {
+<span class="nc" id="L27">        FileUploadUtils.setDefaultBaseDir(FileUploadUtils.userPath);</span>
+<span class="nc" id="L28">        String filename = FileUploadUtils.upload(file);</span>
+<span class="nc" id="L29">        log.debug(&quot;上传文件名 : &quot; + filename);</span>
+<span class="nc" id="L30">        return ResponseResult.success((Object) filename);</span>
+    }
+
+    @PostMapping(&quot;/movie&quot;)
+    public ResponseResult uploadMovie(@RequestParam(&quot;file&quot;) MultipartFile file) throws IOException {
+<span class="nc" id="L35">        FileUploadUtils.setDefaultBaseDir(FileUploadUtils.moviePath);</span>
+<span class="nc" id="L36">        String filename = FileUploadUtils.upload(file);</span>
+<span class="nc" id="L37">        log.debug(&quot;上传文件名 : &quot; + filename);</span>
+<span class="nc" id="L38">        return ResponseResult.success((Object) filename);</span>
+    }
+
+    @PostMapping(&quot;/cinema&quot;)
+    public ResponseResult uploadCinema(@RequestParam(&quot;file&quot;) MultipartFile file) throws IOException {
+<span class="nc" id="L43">        FileUploadUtils.setDefaultBaseDir(FileUploadUtils.cinemaPath);</span>
+<span class="nc" id="L44">        String filename = FileUploadUtils.upload(file);</span>
+<span class="nc" id="L45">        log.debug(&quot;上传文件名 : &quot; + filename);</span>
+<span class="nc" id="L46">        return ResponseResult.success((Object) filename);</span>
+    }
+
+    @PostMapping(&quot;/actor&quot;)
+    public ResponseResult uploadActor(@RequestParam(&quot;file&quot;) MultipartFile file) throws IOException {
+<span class="nc" id="L51">        FileUploadUtils.setDefaultBaseDir(FileUploadUtils.actorPath);</span>
+<span class="nc" id="L52">        String filename = FileUploadUtils.upload(file);</span>
+<span class="nc" id="L53">        log.debug(&quot;上传文件名 : &quot; + filename);</span>
+<span class="nc" id="L54">        return ResponseResult.success((Object) filename);</span>
+    }
+
+    @RequestMapping(&quot;/delete&quot;)
+    public ResponseResult deletePicture(String filePath) {
+        try {
+<span class="nc" id="L60">            String path = ResourceUtils.getURL(&quot;classpath:&quot;).getPath().substring(1) + &quot;static&quot; + filePath;</span>
+<span class="nc" id="L61">            log.debug(&quot;删除文件路径为：&quot; + path);</span>
+<span class="nc" id="L62">            boolean flag = FileUploadUtils.deleteFile(path);</span>
+<span class="nc bnc" id="L63" title="All 2 branches missed.">            log.debug(flag ? &quot;删除成功&quot; : &quot;删除失败&quot;);</span>
+<span class="nc" id="L64">        } catch (FileNotFoundException e) {</span>
+<span class="nc" id="L65">            System.out.println(&quot;删除文件不存在&quot;);</span>
+        } finally {
+<span class="nc" id="L67">            return ResponseResult.success();</span>
+        }
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

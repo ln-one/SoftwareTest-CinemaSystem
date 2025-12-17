@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BaseController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">CinemaManagerApi</a> &gt; <a href="index.source.html" class="el_package">com.rabbiter.cm.controller</a> &gt; <span class="el_source">BaseController.java</span></div><h1>BaseController.java</h1><pre class="source lang-java linenums">package com.rabbiter.cm.controller;
+
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.rabbiter.cm.common.page.Page;
+import com.rabbiter.cm.common.page.PageBuilder;
+import com.rabbiter.cm.common.response.ResponseResult;
+
+import java.util.List;
+
+import static com.rabbiter.cm.common.page.PageBuilder.*;
+
+/**
+ * 抽取重复功能为基类
+ */
+<span class="fc" id="L16">public class BaseController {</span>
+
+    /**
+     * 开启分页
+     */
+    public void startPage() {
+<span class="nc" id="L22">        Page page = PageBuilder.buildPage();</span>
+<span class="nc" id="L23">        Integer pageNum = page.getPageNum();</span>
+<span class="nc" id="L24">        Integer pageSize = page.getPageSize();</span>
+<span class="nc bnc" id="L25" title="All 4 branches missed.">        if (pageNum != null &amp;&amp; pageSize != null) {</span>
+<span class="nc" id="L26">            PageHelper.startPage(pageNum, pageSize, page.getOrderByColumn());</span>
+        }
+<span class="nc" id="L28">    }</span>
+
+    /**
+     * 根据修改行数返回响应消息
+     * @param rows
+     * @return
+     */
+    public ResponseResult getResult(int rows) {
+<span class="nc bnc" id="L36" title="All 2 branches missed.">        return rows == 0 ? ResponseResult.error() : ResponseResult.success();</span>
+    }
+
+    /**
+     * 分页响应消息
+     * @param data
+     * @return
+     */
+    public ResponseResult getResult(List&lt;?&gt; data) {
+<span class="nc" id="L45">        PageInfo pageInfo = new PageInfo(data);</span>
+<span class="nc" id="L46">        ResponseResult responseResult = ResponseResult.success(data);</span>
+<span class="nc" id="L47">        responseResult.put(PAGE_NUM, pageInfo.getPageNum());</span>
+<span class="nc" id="L48">        responseResult.put(PAGE_SIZE, pageInfo.getPageSize());</span>
+<span class="nc" id="L49">        responseResult.put(TOTAL, pageInfo.getTotal());</span>
+<span class="nc" id="L50">        return responseResult;</span>
+    }
+
+    /**
+     * 对象类型响应消息
+     * @param data
+     * @return
+     */
+    public ResponseResult getResult(Object data) {
+<span class="nc" id="L59">        return ResponseResult.success(data);</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

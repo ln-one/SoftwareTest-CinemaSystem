@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SysRoleServiceImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">CinemaManagerApi</a> &gt; <a href="index.source.html" class="el_package">com.rabbiter.cm.service.impl</a> &gt; <span class="el_source">SysRoleServiceImpl.java</span></div><h1>SysRoleServiceImpl.java</h1><pre class="source lang-java linenums">package com.rabbiter.cm.service.impl;
+
+import com.rabbiter.cm.domain.SysRole;
+import com.rabbiter.cm.mapper.SysRoleMapper;
+import com.rabbiter.cm.service.SysRoleService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.HashSet;
+import java.util.List;
+
+
+@Service
+<span class="fc" id="L14">public class SysRoleServiceImpl implements SysRoleService {</span>
+
+    @Autowired
+    private SysRoleMapper sysRoleMapper;
+
+    @Override
+    public List&lt;SysRole&gt; findAllRoles() {
+<span class="fc" id="L21">        return sysRoleMapper.findAllRoles();</span>
+    }
+
+    @Override
+    public SysRole findRoleById(Long id) {
+<span class="fc" id="L26">        return sysRoleMapper.findRoleById(id);</span>
+    }
+
+    @Override
+    public int addRole(SysRole sysRole) {
+<span class="fc" id="L31">        return sysRoleMapper.addRole(sysRole);</span>
+    }
+
+    @Override
+    public int updateRole(SysRole sysRole) {
+<span class="fc" id="L36">        return sysRoleMapper.updateRole(sysRole);</span>
+    }
+
+    @Override
+    public int deleteRole(Long[] ids) {
+<span class="fc" id="L41">        int rows = 0;</span>
+<span class="fc bfc" id="L42" title="All 2 branches covered.">        for (Long id : ids) {</span>
+<span class="fc" id="L43">            rows += sysRoleMapper.deleteRole(id);</span>
+        }
+<span class="fc" id="L45">        return rows;</span>
+    }
+
+    @Override
+    public int allotRight(Long roleId, Long[] keys) {
+<span class="fc" id="L50">        int rows = 0;</span>
+<span class="fc" id="L51">        HashSet&lt;Long&gt; originResources = new HashSet&lt;&gt;(sysRoleMapper.findAllRights(roleId));</span>
+
+<span class="fc bfc" id="L53" title="All 2 branches covered.">        for (Long id : keys) {</span>
+<span class="fc bfc" id="L54" title="All 2 branches covered.">            if (originResources.contains(id)) {</span>
+<span class="fc" id="L55">                originResources.remove(id);</span>
+            } else {
+<span class="fc" id="L57">                rows += sysRoleMapper.addRight(roleId, id);</span>
+            }
+        }
+<span class="fc bfc" id="L60" title="All 2 branches covered.">        for (Long id : originResources) {</span>
+<span class="fc" id="L61">            rows += sysRoleMapper.deleteRight(roleId, id);</span>
+<span class="fc" id="L62">        }</span>
+<span class="fc" id="L63">        return rows;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

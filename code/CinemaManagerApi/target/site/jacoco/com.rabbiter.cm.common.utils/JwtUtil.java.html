@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>JwtUtil.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">CinemaManagerApi</a> &gt; <a href="index.source.html" class="el_package">com.rabbiter.cm.common.utils</a> &gt; <span class="el_source">JwtUtil.java</span></div><h1>JwtUtil.java</h1><pre class="source lang-java linenums">package com.rabbiter.cm.common.utils;
+
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTVerifier;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.JWTDecodeException;
+import com.auth0.jwt.interfaces.DecodedJWT;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.Date;
+
+/**
+ * 签名与校验token工具类
+ */
+<span class="nc" id="L16">public class JwtUtil {</span>
+<span class="nc" id="L17">    static Logger log = LoggerFactory.getLogger(JwtUtil.class);</span>
+    /**
+     * JWT验证过期时间 EXPIRE_TIME 分钟 暂定一小时
+     */
+    private static final long EXPIRE_TIME = 60 * 60 * 1000;
+
+    /**
+     * 校验token是否正确
+     *
+     * @param token  密钥
+     * @param secret 用户的密码
+     * @return 是否正确
+     */
+    public static boolean verify(String token, String username, String secret) {
+        try {
+            //根据密码生成JWT效验器
+<span class="nc" id="L33">            Algorithm algorithm = Algorithm.HMAC256(secret);</span>
+<span class="nc" id="L34">            JWTVerifier verifier = JWT.require(algorithm)</span>
+<span class="nc" id="L35">                    .withClaim(&quot;username&quot;, username)</span>
+<span class="nc" id="L36">                    .build();</span>
+            //效验TOKEN
+<span class="nc" id="L38">            DecodedJWT jwt = verifier.verify(token);</span>
+<span class="nc" id="L39">            log.info(&quot;登录验证成功!&quot;);</span>
+<span class="nc" id="L40">            return true;</span>
+<span class="nc" id="L41">        } catch (Exception exception) {</span>
+<span class="nc" id="L42">            log.error(&quot;JwtUtil登录验证失败!&quot;);</span>
+<span class="nc" id="L43">            return false;</span>
+        }
+    }
+
+    /**
+     * 获得token中的信息无需secret解密也能获得
+     *
+     * @return token中包含的用户名
+     */
+    public static String getUsername(String token) {
+        try {
+<span class="nc" id="L54">            DecodedJWT jwt = JWT.decode(token);</span>
+<span class="nc" id="L55">            return jwt.getClaim(&quot;username&quot;).asString();</span>
+<span class="nc" id="L56">        } catch (JWTDecodeException e) {</span>
+<span class="nc" id="L57">            return null;</span>
+        }
+    }
+
+    /**
+     * 生成token签名EXPIRE_TIME 分钟后过期
+     *
+     * @param username 用户名
+     * @param secret   用户的密码
+     * @return 加密的token
+     */
+    public static String sign(String username, String secret) {
+<span class="nc" id="L69">        Date date = new Date(System.currentTimeMillis() + EXPIRE_TIME);</span>
+<span class="nc" id="L70">        Algorithm algorithm = Algorithm.HMAC256(secret);</span>
+        // 附带username信息
+<span class="nc" id="L72">        return JWT.create()</span>
+<span class="nc" id="L73">                .withClaim(&quot;username&quot;, username)</span>
+<span class="nc" id="L74">                .withExpiresAt(date)</span>
+<span class="nc" id="L75">                .sign(algorithm);</span>
+
+    }
+
+    public static void main(String[] args) {
+        /**
+         * 测试生成一个token
+         * 结果：eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MDc0ODI5OTYsInVzZXJuYW1lIjoi5ZGo5YWrIn0.UP6kFC0BofuX7FLoPDMWCQno-NhVuYA0NlQG8xgt2Rc
+         */
+<span class="nc" id="L84">        String sign = sign(&quot;周八&quot;, &quot;f93643c0eacc54a5ee1783744466ab9e&quot;);</span>
+<span class="nc" id="L85">        log.warn(&quot;测试生成一个token\n&quot; + sign);</span>
+<span class="nc" id="L86">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
