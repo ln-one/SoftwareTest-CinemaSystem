@@ -727,27 +727,85 @@ user.setSalt(salt);
 | SEC-AUTHZ-002 | 更新时使用他人用户名 | 拒绝更新 | 通过 |
 | SEC-AUTHZ-003 | 更新不存在的用户 | 拒绝更新 | 通过 |
 
-### 6.6 安全测试总结
+### 6.6 OWASP Top 10 高级安全测试
 
-#### 6.6.1 测试结果统计
+本节基于 OWASP Top 10 2021 安全风险清单，对系统进行深度安全漏洞检测。
+
+#### 6.6.1 OWASP Top 10 测试覆盖
+
+| OWASP编号 | 风险类别 | 测试用例数 | 发现风险 |
+|-----------|----------|------------|----------|
+| A01:2021 | 访问控制失效 (Broken Access Control) | 3 | 水平越权、垂直越权、IDOR |
+| A02:2021 | 加密机制失效 (Cryptographic Failures) | 3 | 密码哈希强度验证通过 |
+| A03:2021 | 注入攻击 (Injection) | 9 | SQL注入防护有效 |
+| A04:2021 | 不安全设计 (Insecure Design) | 2 | 业务逻辑漏洞、竞态条件 |
+| A07:2021 | 身份认证失效 (Authentication Failures) | 3 | 暴力破解、并发攻击、用户枚举 |
+
+#### 6.6.2 SQL注入攻击向量测试（参数化测试）
+
+使用 JUnit 5 参数化测试，批量验证多种 SQL 注入攻击向量：
+
+```java
+@ParameterizedTest
+@CsvSource({
+    "admin' OR '1'='1, SQL注入-万能密码",
+    "admin'; DROP TABLE sys_user;--, SQL注入-删表攻击",
+    "admin' UNION SELECT * FROM sys_user--, SQL注入-联合查询",
+    "admin' AND SLEEP(5)--, SQL注入-时间盲注"
+})
+void sqlInjectionVectors_ShouldBePrevented(String payload, String attackType)
+```
+
+#### 6.6.3 并发安全测试
+
+使用多线程模拟并发攻击场景：
+
+```java
+@Test
+void concurrentLoginAttack_ThreadSafety() {
+    int threadCount = 50;
+    ExecutorService executor = Executors.newFixedThreadPool(threadCount);
+    // 50个线程同时发起登录攻击
+    // 验证系统在高并发下的安全性
+}
+```
+
+#### 6.6.4 时间侧信道攻击检测
+
+检测用户枚举漏洞（通过响应时间差异）：
+
+```
+存在用户响应时间: 160583ns
+不存在用户响应时间: 48334ns
+风险：响应时间差异可被利用进行用户枚举
+```
+
+### 6.7 安全测试总结
+
+#### 6.7.1 测试结果统计
 
 | 测试类别 | 用例数 | 通过 | 失败 | 通过率 |
 |----------|--------|------|------|--------|
-| 认证安全 | 3 | 3 | 0 | 100% |
-| 密码安全 | 3 | 3 | 0 | 100% |
-| 输入验证 | 4 | 4 | 0 | 100% |
-| 授权安全 | 3 | 3 | 0 | 100% |
-| 数据安全 | 3 | 3 | 0 | 100% |
-| **合计** | **16** | **16** | **0** | **100%** |
+| 基础安全测试 | 16 | 16 | 0 | 100% |
+| OWASP Top 10 测试 | 30 | 30 | 0 | 100% |
+| **合计** | **46** | **46** | **0** | **100%** |
 
-#### 6.6.2 发现的安全风险
+#### 6.7.2 发现的安全风险（基于OWASP标准）
 
-| 风险编号 | 风险描述 | 严重程度 | 建议措施 |
-|----------|----------|----------|----------|
-| RISK-001 | 无账户锁定机制 | 中 | 实现登录失败次数限制 |
-| RISK-002 | MD5算法安全性较低 | 低 | 升级为bcrypt |
-| RISK-003 | 无XSS输出转义 | 中 | 前端展示时转义 |
-| RISK-004 | 无登录日志 | 低 | 添加审计日志 |
+| 风险编号 | OWASP分类 | 风险描述 | 严重程度 | 建议措施 |
+|----------|-----------|----------|----------|----------|
+| RISK-001 | A01 | 水平越权漏洞 | 高 | Service层验证用户身份 |
+| RISK-002 | A01 | 垂直越权漏洞 | 高 | 验证操作者角色权限 |
+| RISK-003 | A01 | IDOR漏洞 | 高 | 验证资源归属 |
+| RISK-004 | A02 | MD5算法安全性较低 | 中 | 升级为bcrypt/Argon2 |
+| RISK-005 | A03 | XSS输出未转义 | 中 | 前端展示时HTML转义 |
+| RISK-006 | A04 | 业务逻辑漏洞 | 中 | 添加座位数量校验 |
+| RISK-007 | A04 | 竞态条件(超卖) | 高 | 实现分布式锁 |
+| RISK-008 | A07 | 无账户锁定机制 | 中 | 连续失败后锁定账户 |
+| RISK-009 | A07 | 用户枚举漏洞 | 低 | 统一响应时间 |
+| RISK-010 | A07 | 无登录审计日志 | 低 | 添加安全审计 |
+| RISK-011 | A07 | 弱密码允许注册 | 中 | 实现密码复杂度校验 |
+| RISK-012 | A09 | 无安全日志监控 | 低 | 集成SIEM系统 |
 
 ---
 
@@ -759,28 +817,30 @@ user.setSalt(salt);
 
 | 测试类 | 用例数 | 通过 | 失败 | 跳过 | 执行时间 |
 |--------|--------|------|------|------|----------|
-| **SecurityTest (安全测试)** | **16** | **16** | **0** | **0** | **0.032s** |
-| SysUserServiceTest | 21 | 21 | 0 | 0 | 0.012s |
-| SysBillServiceTest | 15 | 15 | 0 | 0 | 0.016s |
-| SysSessionServiceTest | 11 | 11 | 0 | 0 | 0.011s |
-| SysMovieServiceTest | 11 | 11 | 0 | 0 | 0.011s |
+| **AdvancedSecurityTest (OWASP Top 10)** | **30** | **30** | **0** | **0** | **0.211s** |
+| **SecurityTest (基础安全测试)** | **16** | **16** | **0** | **0** | **0.012s** |
+| SysUserServiceTest | 21 | 21 | 0 | 0 | 0.010s |
+| SysBillServiceTest | 15 | 15 | 0 | 0 | 0.007s |
+| SysSessionServiceTest | 11 | 11 | 0 | 0 | 0.015s |
+| SysMovieServiceTest | 11 | 11 | 0 | 0 | 0.010s |
 | SysMovieCategoryServiceTest | 9 | 9 | 0 | 0 | 0.009s |
-| SysCinemaServiceTest | 8 | 8 | 0 | 0 | 0.008s |
-| SysHallServiceTest | 10 | 10 | 0 | 0 | 0.072s |
-| SysRoleServiceTest | 17 | 17 | 0 | 0 | 0.014s |
-| SysResourceServiceTest | 13 | 13 | 0 | 0 | 0.010s |
-| CinemaManagerApplicationTests | 1 | 1 | 0 | 0 | 6.830s |
-| **合计** | **132** | **132** | **0** | **0** | **7.2s** |
+| SysCinemaServiceTest | 8 | 8 | 0 | 0 | 0.007s |
+| SysHallServiceTest | 10 | 10 | 0 | 0 | 0.010s |
+| SysRoleServiceTest | 17 | 17 | 0 | 0 | 0.012s |
+| SysResourceServiceTest | 13 | 13 | 0 | 0 | 0.013s |
+| CinemaManagerApplicationTests | 1 | 1 | 0 | 0 | 6.948s |
+| **合计** | **162** | **162** | **0** | **0** | **7.3s** |
 
 #### 7.1.2 按测试类型统计
 
 | 测试类型 | 用例数 | 占比 |
 |----------|--------|------|
-| 正常流程测试 | 58 | 44% |
-| 异常流程测试 | 24 | 18% |
-| 边界条件测试 | 28 | 21% |
-| **安全测试** | **16** | **12%** |
-| 缺陷探测测试 | 6 | 5% |
+| **OWASP安全测试** | **30** | **19%** |
+| **基础安全测试** | **16** | **10%** |
+| 正常流程测试 | 58 | 36% |
+| 异常流程测试 | 24 | 15% |
+| 边界条件测试 | 28 | 17% |
+| 缺陷探测测试 | 6 | 3% |
 
 ### 6.2 覆盖率统计
 
@@ -1021,7 +1081,7 @@ if (!originUser.getPassword().equals(sysUser.getPassword())) {
 
 | 成员 | 负责模块 | 工作内容 |
 |------|----------|----------|
-| **张春冉** | **安全测试 + 用户模块 + 项目统筹** | SecurityTest (16个用例) + SysUserServiceTest (21个用例) + 测试框架搭建(JaCoCo配置) + 报告第5.1节 + 报告第6章(安全测试) + 缺陷分析 + 报告整合 |
+| **张春冉** | **OWASP安全测试 + 用户模块 + 项目统筹** | AdvancedSecurityTest (30个OWASP用例) + SecurityTest (16个用例) + SysUserServiceTest (21个用例) + 测试框架搭建 + 报告第5.1节 + 报告第6章(安全测试) + 缺陷分析 + 报告整合 |
 | 成员B | 订单/场次模块 | SysBillServiceTest + SysSessionServiceTest (26个用例) + 报告第5.2节 |
 | 成员C | 电影模块 | SysMovieServiceTest + SysMovieCategoryServiceTest (20个用例) + 报告第5.3节 |
 | 成员D | 影院/影厅模块 | SysCinemaServiceTest + SysHallServiceTest (18个用例) + 报告第5.4节 |

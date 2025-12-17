@@ -1,7 +1,10 @@
 com/rabbiter/cm/service/SecurityTest$AuthorizationSecurityTest.class
 com/rabbiter/cm/service/SecurityTest$InputValidationSecurityTest.class
+com/rabbiter/cm/service/AdvancedSecurityTest$InsecureDesignTest.class
+com/rabbiter/cm/service/AdvancedSecurityTest.class
 com/rabbiter/cm/service/SecurityTest$AuthenticationSecurityTest.class
 com/rabbiter/cm/service/SecurityTest$DataSecurityTest.class
+com/rabbiter/cm/service/AdvancedSecurityTest$CryptographicFailuresTest.class
 com/rabbiter/cm/service/SysRoleServiceTest.class
 com/rabbiter/cm/service/SecurityTest$PasswordSecurityTest.class
 com/rabbiter/cm/service/SysResourceServiceTest.class
@@ -11,6 +14,10 @@ com/rabbiter/cm/service/SysUserServiceTest.class
 com/rabbiter/cm/service/SecurityTest.class
 com/rabbiter/cm/service/SysCinemaServiceTest.class
 com/rabbiter/cm/service/SysMovieCategoryServiceTest.class
+com/rabbiter/cm/service/AdvancedSecurityTest$BrokenAccessControlTest.class
 com/rabbiter/cm/service/SysBillServiceTest.class
 com/rabbiter/cm/service/SysMovieServiceTest.class
 com/rabbiter/cm/service/SysSessionServiceTest.class
+com/rabbiter/cm/service/AdvancedSecurityTest$AuthenticationFailuresTest.class
+com/rabbiter/cm/service/AdvancedSecurityTest$InjectionTest.class
+com/rabbiter/cm/service/AdvancedSecurityTest$SecurityReportTest.class

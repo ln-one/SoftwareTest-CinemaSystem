@@ -194,3 +194,31 @@
 17:32:12.394 [SpringContextShutdownHook] INFO  o.q.c.QuartzScheduler - [shutdown,740] - Scheduler quartzScheduler_$_NON_CLUSTERED shutdown complete.
 17:32:12.452 [SpringContextShutdownHook] INFO  c.a.d.p.DruidDataSource - [close,2032] - {dataSource-1} closing ...
 17:32:12.454 [SpringContextShutdownHook] INFO  c.a.d.p.DruidDataSource - [close,2104] - {dataSource-1} closed
+17:41:20.718 [main] INFO  c.r.c.CinemaManagerApplicationTests - [logStarting,55] - Starting CinemaManagerApplicationTests using Java 25.0.1 on MacBook.local with PID 63040 (started by ln1 in /Users/ln1/Projects/基于JAVA+SpringBoot+Vue的前后端分离的电影院售票管理运营平台/code/CinemaManagerApi)
+17:41:20.718 [background-preinit] INFO  o.h.v.i.util.Version - [<clinit>,21] - HV000001: Hibernate Validator 6.1.6.Final
+17:41:20.719 [main] INFO  c.r.c.CinemaManagerApplicationTests - [logStartupProfileInfo,660] - No active profile set, falling back to default profiles: default
+17:41:21.632 [main] INFO  c.a.d.p.DruidDataSource - [init,985] - {dataSource-1} inited
+17:41:26.692 [Druid-ConnectionPool-Create-729134973] INFO  c.a.d.p.DruidAbstractDataSource - [setFailContinuous,1799] - {dataSource-1} failContinuous is true
+17:41:27.061 [main] INFO  o.q.i.StdSchedulerFactory - [instantiate,1220] - Using default implementation for ThreadExecutor
+17:41:27.067 [main] INFO  o.q.c.SchedulerSignalerImpl - [<init>,61] - Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+17:41:27.067 [main] INFO  o.q.c.QuartzScheduler - [<init>,229] - Quartz Scheduler v.2.3.2 created.
+17:41:27.067 [main] INFO  o.q.s.RAMJobStore - [initialize,155] - RAMJobStore initialized.
+17:41:27.068 [main] INFO  o.q.c.QuartzScheduler - [initialize,294] - Scheduler meta-data: Quartz Scheduler (v2.3.2) 'quartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 10 threads.
+  Using job-store 'org.quartz.simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+17:41:27.068 [main] INFO  o.q.i.StdSchedulerFactory - [instantiate,1374] - Quartz scheduler 'quartzScheduler' initialized from an externally provided properties instance.
+17:41:27.068 [main] INFO  o.q.i.StdSchedulerFactory - [instantiate,1378] - Quartz scheduler version: 2.3.2
+17:41:27.068 [main] INFO  o.q.c.QuartzScheduler - [setJobFactory,2293] - JobFactory set to: org.springframework.scheduling.quartz.SpringBeanJobFactory@a353dff
+17:41:27.091 [main] INFO  o.q.c.QuartzScheduler - [start,547] - Scheduler quartzScheduler_$_NON_CLUSTERED started.
+17:41:27.097 [main] INFO  c.r.c.CinemaManagerApplicationTests - [logStarted,61] - Started CinemaManagerApplicationTests in 6.578 seconds (JVM running for 7.131)
+17:41:27.583 [SpringContextShutdownHook] INFO  o.q.c.QuartzScheduler - [standby,585] - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+17:41:27.583 [SpringContextShutdownHook] INFO  o.q.c.QuartzScheduler - [shutdown,666] - Scheduler quartzScheduler_$_NON_CLUSTERED shutting down.
+17:41:27.583 [SpringContextShutdownHook] INFO  o.q.c.QuartzScheduler - [standby,585] - Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+17:41:27.583 [SpringContextShutdownHook] INFO  o.q.c.QuartzScheduler - [shutdown,740] - Scheduler quartzScheduler_$_NON_CLUSTERED shutdown complete.
+17:41:27.630 [SpringContextShutdownHook] INFO  c.a.d.p.DruidDataSource - [close,2032] - {dataSource-1} closing ...
+17:41:27.630 [SpringContextShutdownHook] INFO  c.a.d.p.DruidDataSource - [close,2104] - {dataSource-1} closed

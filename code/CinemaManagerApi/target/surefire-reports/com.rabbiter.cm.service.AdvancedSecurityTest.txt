@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.rabbiter.cm.service.AdvancedSecurityTest
+-------------------------------------------------------------------------------
+Tests run: 30, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.211 s - in com.rabbiter.cm.service.AdvancedSecurityTest

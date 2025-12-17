@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.rabbiter.cm.service.SysRoleServiceTest" time="0.012" tests="17" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.rabbiter.cm.service.AdvancedSecurityTest" time="0.211" tests="30" errors="0" skipped="0" failures="0">
   <properties>
     <property name="socksProxyHost" value="127.0.0.1"/>
     <property name="http.proxyHost" value="127.0.0.1"/>
@@ -65,21 +65,34 @@
     <property name="java.class.version" value="69.0"/>
     <property name="http.proxyPort" value="7890"/>
   </properties>
-  <testcase name="findRoleById_RoleExists_ReturnsRole" classname="com.rabbiter.cm.service.SysRoleServiceTest" time="0.005"/>
-  <testcase name="deleteRole_SingleRole_ReturnsDeletedCount" classname="com.rabbiter.cm.service.SysRoleServiceTest" time="0.001"/>
-  <testcase name="findRoleById_RoleNotExists_ReturnsNull" classname="com.rabbiter.cm.service.SysRoleServiceTest" time="0"/>
-  <testcase name="deleteRole_EmptyArray_ReturnsZero" classname="com.rabbiter.cm.service.SysRoleServiceTest" time="0"/>
-  <testcase name="allotRight_AddNewRights_ReturnsCount" classname="com.rabbiter.cm.service.SysRoleServiceTest" time="0.001"/>
-  <testcase name="allotRight_NoChange_ReturnsZero" classname="com.rabbiter.cm.service.SysRoleServiceTest" time="0"/>
-  <testcase name="updateRole_ReturnsUpdatedCount" classname="com.rabbiter.cm.service.SysRoleServiceTest" time="0"/>
-  <testcase name="findAllRoles_NoRoles_ReturnsEmptyList" classname="com.rabbiter.cm.service.SysRoleServiceTest" time="0.001"/>
-  <testcase name="findAllRoles_ReturnsRoleList" classname="com.rabbiter.cm.service.SysRoleServiceTest" time="0"/>
-  <testcase name="addRole_ReturnsInsertedCount" classname="com.rabbiter.cm.service.SysRoleServiceTest" time="0"/>
-  <testcase name="allotRight_NullKeys_ShouldThrowException" classname="com.rabbiter.cm.service.SysRoleServiceTest" time="0.001"/>
-  <testcase name="allotRight_RemoveRights_ReturnsCount" classname="com.rabbiter.cm.service.SysRoleServiceTest" time="0"/>
-  <testcase name="deleteRole_MultipleRoles_ReturnsDeletedCount" classname="com.rabbiter.cm.service.SysRoleServiceTest" time="0.001"/>
-  <testcase name="allotRight_ClearAllRights_ReturnsDeletedCount" classname="com.rabbiter.cm.service.SysRoleServiceTest" time="0"/>
-  <testcase name="allotRight_MixedOperation_ReturnsCount" classname="com.rabbiter.cm.service.SysRoleServiceTest" time="0.001"/>
-  <testcase name="allotRight_MassiveChanges_ReturnsCorrectCount" classname="com.rabbiter.cm.service.SysRoleServiceTest" time="0.001"/>
-  <testcase name="deleteRole_NullArray_ShouldThrowException" classname="com.rabbiter.cm.service.SysRoleServiceTest" time="0"/>
+  <testcase name="generateSecurityTestSummary" classname="com.rabbiter.cm.service.AdvancedSecurityTest$SecurityReportTest" time="0.073"/>
+  <testcase name="businessLogicFlaw_NegativeQuantity" classname="com.rabbiter.cm.service.AdvancedSecurityTest$InsecureDesignTest" time="0.007"/>
+  <testcase name="raceCondition_ConcurrentTicketPurchase" classname="com.rabbiter.cm.service.AdvancedSecurityTest$InsecureDesignTest" time="0.002"/>
+  <testcase name="concurrentLoginAttack_ThreadSafety" classname="com.rabbiter.cm.service.AdvancedSecurityTest$AuthenticationFailuresTest" time="0.063"/>
+  <testcase name="userEnumeration_ResponseTimingAnalysis" classname="com.rabbiter.cm.service.AdvancedSecurityTest$AuthenticationFailuresTest" time="0.001"/>
+  <testcase name="bruteForceAttack_Simulation" classname="com.rabbiter.cm.service.AdvancedSecurityTest$AuthenticationFailuresTest" time="0.013"/>
+  <testcase name="xssAttackVectors_ShouldBeHandled{String}[1]" classname="com.rabbiter.cm.service.AdvancedSecurityTest$InjectionTest" time="0.006"/>
+  <testcase name="xssAttackVectors_ShouldBeHandled{String}[2]" classname="com.rabbiter.cm.service.AdvancedSecurityTest$InjectionTest" time="0.001"/>
+  <testcase name="xssAttackVectors_ShouldBeHandled{String}[3]" classname="com.rabbiter.cm.service.AdvancedSecurityTest$InjectionTest" time="0.001"/>
+  <testcase name="xssAttackVectors_ShouldBeHandled{String}[4]" classname="com.rabbiter.cm.service.AdvancedSecurityTest$InjectionTest" time="0.001"/>
+  <testcase name="xssAttackVectors_ShouldBeHandled{String}[5]" classname="com.rabbiter.cm.service.AdvancedSecurityTest$InjectionTest" time="0.001"/>
+  <testcase name="xssAttackVectors_ShouldBeHandled{String}[6]" classname="com.rabbiter.cm.service.AdvancedSecurityTest$InjectionTest" time="0.001"/>
+  <testcase name="sqlInjectionVectors_ShouldBePrevented{String, String}[1]" classname="com.rabbiter.cm.service.AdvancedSecurityTest$InjectionTest" time="0.002"/>
+  <testcase name="sqlInjectionVectors_ShouldBePrevented{String, String}[2]" classname="com.rabbiter.cm.service.AdvancedSecurityTest$InjectionTest" time="0"/>
+  <testcase name="sqlInjectionVectors_ShouldBePrevented{String, String}[3]" classname="com.rabbiter.cm.service.AdvancedSecurityTest$InjectionTest" time="0"/>
+  <testcase name="sqlInjectionVectors_ShouldBePrevented{String, String}[4]" classname="com.rabbiter.cm.service.AdvancedSecurityTest$InjectionTest" time="0.001"/>
+  <testcase name="sqlInjectionVectors_ShouldBePrevented{String, String}[5]" classname="com.rabbiter.cm.service.AdvancedSecurityTest$InjectionTest" time="0.001"/>
+  <testcase name="sqlInjectionVectors_ShouldBePrevented{String, String}[6]" classname="com.rabbiter.cm.service.AdvancedSecurityTest$InjectionTest" time="0"/>
+  <testcase name="commandInjection_InUserInput" classname="com.rabbiter.cm.service.AdvancedSecurityTest$InjectionTest" time="0.001"/>
+  <testcase name="passwordHashStrength_ShouldUseSalt" classname="com.rabbiter.cm.service.AdvancedSecurityTest$CryptographicFailuresTest" time="0.001"/>
+  <testcase name="weakPasswordDetection_CommonPasswords{String}[1]" classname="com.rabbiter.cm.service.AdvancedSecurityTest$CryptographicFailuresTest" time="0.001"/>
+  <testcase name="weakPasswordDetection_CommonPasswords{String}[2]" classname="com.rabbiter.cm.service.AdvancedSecurityTest$CryptographicFailuresTest" time="0.001"/>
+  <testcase name="weakPasswordDetection_CommonPasswords{String}[3]" classname="com.rabbiter.cm.service.AdvancedSecurityTest$CryptographicFailuresTest" time="0.001"/>
+  <testcase name="weakPasswordDetection_CommonPasswords{String}[4]" classname="com.rabbiter.cm.service.AdvancedSecurityTest$CryptographicFailuresTest" time="0.001"/>
+  <testcase name="weakPasswordDetection_CommonPasswords{String}[5]" classname="com.rabbiter.cm.service.AdvancedSecurityTest$CryptographicFailuresTest" time="0.001"/>
+  <testcase name="weakPasswordDetection_CommonPasswords{String}[6]" classname="com.rabbiter.cm.service.AdvancedSecurityTest$CryptographicFailuresTest" time="0.001"/>
+  <testcase name="samePasswordDifferentSalt_ShouldProduceDifferentHash" classname="com.rabbiter.cm.service.AdvancedSecurityTest$CryptographicFailuresTest" time="0.001"/>
+  <testcase name="insecureDirectObjectReference_BillAccess" classname="com.rabbiter.cm.service.AdvancedSecurityTest$BrokenAccessControlTest" time="0.001"/>
+  <testcase name="verticalPrivilegeEscalation_DeleteOperation" classname="com.rabbiter.cm.service.AdvancedSecurityTest$BrokenAccessControlTest" time="0"/>
+  <testcase name="horizontalPrivilegeEscalation_ShouldBeDetected" classname="com.rabbiter.cm.service.AdvancedSecurityTest$BrokenAccessControlTest" time="0.001"/>
 </testsuite>
