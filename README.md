@@ -21,10 +21,10 @@
 
 | 文件/目录 | 说明 |
 |-----------|------|
-| `REPORT.md` | 实验报告（完整版） |
+| `REPORT.md` | 实验报告（完整版，含安全测试章节） |
 | `TEST_PLAN.md` | 测试分工方案 |
 | `REQUIREMENTS.md` | 实验要求 |
-| `code/CinemaManagerApi/src/test/` | 测试代码（116个测试用例） |
+| `code/CinemaManagerApi/src/test/` | 测试代码（132个测试用例，含16个安全测试） |
 | `code/CinemaManagerApi/target/site/jacoco/` | 覆盖率报告 |
 
 ---
@@ -33,11 +33,13 @@
 
 | 指标 | 数值 |
 |------|------|
-| 测试用例总数 | 116 |
+| 测试用例总数 | 132 |
+| 其中安全测试用例 | 16 |
 | 测试通过率 | 100% |
 | Service层指令覆盖率 | 97% |
 | Service层分支覆盖率 | 93% |
 | 发现的代码缺陷 | 2 |
+| 发现的安全风险 | 4 |
 
 ---
 

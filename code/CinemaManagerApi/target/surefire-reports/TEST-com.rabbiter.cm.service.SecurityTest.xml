@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.rabbiter.cm.service.SysResourceServiceTest" time="0.011" tests="13" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.rabbiter.cm.service.SecurityTest" time="0.032" tests="16" errors="0" skipped="0" failures="0">
   <properties>
     <property name="socksProxyHost" value="127.0.0.1"/>
     <property name="http.proxyHost" value="127.0.0.1"/>
@@ -65,17 +65,20 @@
     <property name="java.class.version" value="69.0"/>
     <property name="http.proxyPort" value="7890"/>
   </properties>
-  <testcase name="findResourceById_ResourceExists_ReturnsResource" classname="com.rabbiter.cm.service.SysResourceServiceTest" time="0.005"/>
-  <testcase name="findAllResources_ReturnsResourceList" classname="com.rabbiter.cm.service.SysResourceServiceTest" time="0"/>
-  <testcase name="deleteResource_SingleResource_ReturnsDeletedCount" classname="com.rabbiter.cm.service.SysResourceServiceTest" time="0.001"/>
-  <testcase name="findResourceById_ResourceNotExists_ReturnsNull" classname="com.rabbiter.cm.service.SysResourceServiceTest" time="0"/>
-  <testcase name="deleteResource_MultipleResources_ReturnsDeletedCount" classname="com.rabbiter.cm.service.SysResourceServiceTest" time="0.001"/>
-  <testcase name="addResource_ChildLevel_SetsLevelBasedOnParent" classname="com.rabbiter.cm.service.SysResourceServiceTest" time="0"/>
-  <testcase name="findWithChildren_ReturnsResourceList" classname="com.rabbiter.cm.service.SysResourceServiceTest" time="0"/>
-  <testcase name="findAllWithAllChildren_ReturnsResourceList" classname="com.rabbiter.cm.service.SysResourceServiceTest" time="0"/>
-  <testcase name="updateResource_TopLevel_SetsLevelToOne" classname="com.rabbiter.cm.service.SysResourceServiceTest" time="0.001"/>
-  <testcase name="updateResource_ChildLevel_SetsLevelBasedOnParent" classname="com.rabbiter.cm.service.SysResourceServiceTest" time="0.001"/>
-  <testcase name="findAllResources_NoResources_ReturnsEmptyList" classname="com.rabbiter.cm.service.SysResourceServiceTest" time="0"/>
-  <testcase name="findResourceById_VerifyLevelHierarchy" classname="com.rabbiter.cm.service.SysResourceServiceTest" time="0"/>
-  <testcase name="addResource_TopLevel_SetsLevelToOne" classname="com.rabbiter.cm.service.SysResourceServiceTest" time="0"/>
+  <testcase name="deleteUser_EmptyArray_ShouldHandleSafely" classname="com.rabbiter.cm.service.SecurityTest$DataSecurityTest" time="0.006"/>
+  <testcase name="deleteUser_NullArray_ShouldThrowException" classname="com.rabbiter.cm.service.SecurityTest$DataSecurityTest" time="0"/>
+  <testcase name="deleteUser_BatchDelete_ShouldValidateEachId" classname="com.rabbiter.cm.service.SecurityTest$DataSecurityTest" time="0.001"/>
+  <testcase name="updateUser_UseOthersUsername_ShouldReject" classname="com.rabbiter.cm.service.SecurityTest$AuthorizationSecurityTest" time="0.001"/>
+  <testcase name="addUser_DuplicateUsername_ShouldReject" classname="com.rabbiter.cm.service.SecurityTest$AuthorizationSecurityTest" time="0"/>
+  <testcase name="updateUser_NonExistentUser_ShouldReject" classname="com.rabbiter.cm.service.SecurityTest$AuthorizationSecurityTest" time="0.001"/>
+  <testcase name="addUser_XssInUsername_ShouldBeStored" classname="com.rabbiter.cm.service.SecurityTest$InputValidationSecurityTest" time="0.007"/>
+  <testcase name="login_SqlInjectionInUsername_ShouldNotExecute" classname="com.rabbiter.cm.service.SecurityTest$InputValidationSecurityTest" time="0.001"/>
+  <testcase name="login_SqlInjectionUniversalPassword_ShouldFail" classname="com.rabbiter.cm.service.SecurityTest$InputValidationSecurityTest" time="0.001"/>
+  <testcase name="addUser_SpecialCharacters_ShouldHandle" classname="com.rabbiter.cm.service.SecurityTest$InputValidationSecurityTest" time="0.004"/>
+  <testcase name="addUser_DifferentUsersShouldHaveDifferentSalts" classname="com.rabbiter.cm.service.SecurityTest$PasswordSecurityTest" time="0.002"/>
+  <testcase name="addUser_PasswordShouldBeHashedWithSalt" classname="com.rabbiter.cm.service.SecurityTest$PasswordSecurityTest" time="0.001"/>
+  <testcase name="updateUser_PasswordChangeShouldRegenerateSalt" classname="com.rabbiter.cm.service.SecurityTest$PasswordSecurityTest" time="0.002"/>
+  <testcase name="login_BruteForceAttempt_ShouldBeDetectable" classname="com.rabbiter.cm.service.SecurityTest$AuthenticationSecurityTest" time="0.002"/>
+  <testcase name="login_NonExistentUser_ShouldReject" classname="com.rabbiter.cm.service.SecurityTest$AuthenticationSecurityTest" time="0.001"/>
+  <testcase name="login_WrongPassword_ShouldReject" classname="com.rabbiter.cm.service.SecurityTest$AuthenticationSecurityTest" time="0.001"/>
 </testsuite>
